@@ -27,6 +27,13 @@
   .wrap { max-width: 720px; margin: 0 auto; padding: 24px 16px 48px; }
   header { margin-bottom: 20px; }
   header .eyebrow { font-size: 13px; color: var(--sub); }
+  .home-link {
+    display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px;
+    font-size: 14px; font-weight: 700; color: var(--accent); text-decoration: none;
+    background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px;
+  }
+  .home-link:hover { border-color: var(--accent); }
+  .home-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   header h1 { margin: 2px 0 0; font-size: 22px; color: var(--accent); }
   .card {
     background: #fff; border: 1px solid var(--line); border-radius: 14px;
@@ -206,6 +213,7 @@ const SET_SIZE = 5;          // 한 세트 문제 수
 const MIN_ANSWER_LENGTH = 15; // 이 글자 수 이상 써야 제출 가능
 </script>
 
+  <a class="home-link" href="index.html">← 실습 자료 홈</a>
   <header>
     <div class="eyebrow">교양 심리학의 이해 · 4~6주차 복습</div>
     <h1>기억 이론 인출 퀴즈 튜터</h1>
