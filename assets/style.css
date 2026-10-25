@@ -35,7 +35,9 @@
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 body {
   margin: 0; background: var(--bg); color: var(--ink);
-  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  font-feature-settings: "ss06";
+  letter-spacing: -0.005em;
   font-size: 16px; line-height: 1.7; word-break: keep-all; overflow-wrap: anywhere;
 }
 a { color: var(--accent-ink); }
