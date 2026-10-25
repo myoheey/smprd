@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>도구별 실습 안내서</title>
+<meta name="description" content="실습 자료 3 — Gemini, ChatGPT, Claude에서 학습 에이전트와 학습 앱을 만드는 화면 안내">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav" aria-label="실습 자료">
+  <div class="inner">
+    <a class="home" href="index.html">학습도구 실습</a>
+    <a href="prd.html">1. PRD 워크시트</a>
+    <a href="fix.html">2. 수정 요청 프롬프트</a>
+    <a href="tools.html" aria-current="page">3. 도구별 안내서</a>
+    <a href="demo.html">예시 앱</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="eyebrow">실습 자료 3</div>
+  <h1>도구별 실습 안내서</h1>
+  <p class="lead">사용하는 도구를 고르면 그 도구의 화면 안내가 나옴. 프롬프트 ①②③은 <a href="prd.html">실습 자료 1</a>에 있음.</p>
+
+  <div class="tabs" role="tablist" aria-label="도구 선택">
+    <button role="tab" id="t-gemini" aria-controls="gemini" type="button">Gemini</button>
+    <button role="tab" id="t-chatgpt" aria-controls="chatgpt" type="button">ChatGPT</button>
+    <button role="tab" id="t-claude" aria-controls="claude" type="button">Claude</button>
+    <button role="tab" id="t-common" aria-controls="common" type="button">공통: 저장·이어가기</button>
+  </div>
+
+  <!-- Gemini -->
+  <section class="panel" id="gemini" role="tabpanel" aria-labelledby="t-gemini">
+    <dl class="info">
+      <dt>주소</dt><dd><a href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a></dd>
+      <dt>추천 대상</dt><dd>학내 Google 계정 사용자, 다른 AI 도구를 써 본 적 없는 사용자</dd>
+      <dt>사용 조건</dt><dd>스킬은 만 18세 이상 · Gemini 활동 기록 보관(Keep Activity) 사용 설정 필요</dd>
+      <dt>오늘 쓰는 기능</dt><dd>에이전트 → 스킬 &nbsp;|&nbsp; 앱 → Canvas</dd>
+    </dl>
+    <div class="step">
+      <div><div class="tag">STEP 1</div><h3>PRD 인터뷰</h3>
+        <ol><li>새 채팅을 열고 프롬프트 ①을 붙여 넣기</li><li>질문에 하나씩 답한 뒤 완성된 PRD를 복사해 두기</li></ol></div>
+      <figure><img src="assets/img/gemini-1.png" alt="Gemini 새 채팅 입력창에 PRD 인터뷰 프롬프트를 붙여 넣은 화면" loading="lazy"><figcaption>새 채팅 입력창</figcaption></figure>
+    </div>
+    <div class="step">
+      <div><div class="tag">STEP 2</div><h3>스킬로 학습 에이전트 만들기</h3>
+        <ol><li>왼쪽 사이드바 아래 <b>설정 → 스킬</b>으로 이동</li><li><b>직접 만들기</b> 선택 → 이름·설명 입력</li><li>프롬프트 ②로 만든 지시문을 <b>요청 사항</b> 칸에 붙여 넣기</li><li>강의자료 <b>PDF</b>를 첨부 (Google Drive 파일은 아직 첨부 불가)</li><li><b>만들기</b>로 저장 → 새 채팅에서 <b>/</b> 입력 → 만든 스킬 선택 → 테스트 질문</li></ol></div>
+      <figure><img src="assets/img/gemini-2.png" alt="Gemini 스킬 만들기 화면: 이름, 설명, 요청 사항 입력란과 만들기 버튼" loading="lazy"><figcaption>설정 → 스킬 → 직접 만들기 화면</figcaption></figure>
+    </div>
+    <div class="step">
+      <div><div class="tag">STEP 3</div><h3>Canvas로 학습 앱 만들기</h3>
+        <ol><li>새 채팅 입력창의 <b>도구 → Canvas</b> 선택 후 프롬프트 ③ 붙여 넣기</li><li>오른쪽 Canvas 위쪽의 <b>코드 / 미리보기</b>로 전환하며 확인</li><li>오류가 나면 <b>콘솔 표시</b>의 빨간 글씨를 복사해 버그 설명에 붙이기</li><li>잘 되는 버전은 코드 전체를 복사해 <b>HTML 파일로 저장</b> (공통 탭 참고)</li><li>공유: 오른쪽 위 <b>공유</b> 아이콘 → 링크 복사</li></ol></div>
+      <figure><img src="assets/img/gemini-3.png" alt="Gemini Canvas에서 퀴즈 앱 미리보기가 실행된 화면, 코드·미리보기 전환과 공유 버튼 표시" loading="lazy"><figcaption>Canvas 미리보기 / 코드 전환 화면</figcaption></figure>
+    </div>
+    <h3>자주 막히는 곳</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>이럴 때</th><th>이렇게</th></tr></thead>
+      <tbody>
+        <tr><th>설정에 "스킬" 메뉴가 없음</th><td>학내 계정에 아직 배포되지 않은 상태. 새 채팅 맨 앞에 지시문을 붙여 넣고 대화를 시작하는 방식으로 진행</td></tr>
+        <tr><th>공유 링크를 휴대폰 앱에서 못 엶</th><td>Canvas 공유 링크는 gemini.google.com(웹)에서만 열림. 휴대폰 브라우저로 열기</td></tr>
+        <tr><th>공유해도 괜찮을까?</th><td>링크를 받은 사람은 앱에 들어 있는 데이터를 볼 수 있음. 개인정보가 들어간 앱은 공유 금지</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ChatGPT -->
+  <section class="panel" id="chatgpt" role="tabpanel" aria-labelledby="t-chatgpt" hidden>
+    <dl class="info">
+      <dt>주소</dt><dd><a href="https://chatgpt.com" target="_blank" rel="noopener">chatgpt.com</a></dd>
+      <dt>추천 대상</dt><dd>평소 ChatGPT를 주로 쓰는 사용자</dd>
+      <dt>사용 조건</dt><dd>무료 계정 가능 · 무료는 프로젝트당 파일 5개 · 맞춤형 GPT 만들기는 유료라 오늘은 "프로젝트" 사용</dd>
+      <dt>오늘 쓰는 기능</dt><dd>에이전트 → 프로젝트 &nbsp;|&nbsp; 앱 → 대화 속 코드 블록 미리보기</dd>
+    </dl>
+    <div class="step">
+      <div><div class="tag">STEP 1</div><h3>PRD 인터뷰</h3>
+        <ol><li>새 채팅을 열고 프롬프트 ①을 붙여 넣기</li><li>질문에 하나씩 답한 뒤 완성된 PRD를 복사해 두기</li></ol></div>
+      <figure><img src="assets/img/chatgpt-1.png" alt="ChatGPT 새 채팅 입력창에 PRD 인터뷰 프롬프트를 붙여 넣은 화면" loading="lazy"><figcaption>새 채팅 입력창</figcaption></figure>
+    </div>
+    <div class="step">
+      <div><div class="tag">STEP 2</div><h3>프로젝트로 학습 에이전트 만들기</h3>
+        <ol><li>사이드바에서 <b>새 프로젝트</b> → 이름 입력</li><li>프로젝트 오른쪽 위 <b>••• → 프로젝트 설정</b> 열기</li><li>프롬프트 ②로 만든 지시문을 <b>지침</b> 칸에 붙여 넣기</li><li>강의자료 파일 추가 (무료는 최대 5개)</li><li>프로젝트 안에서 <b>새 대화</b> 시작 → 테스트 질문</li></ol></div>
+      <figure><img src="assets/img/chatgpt-2.png" alt="ChatGPT 프로젝트 설정 창의 지침 입력란" loading="lazy"><figcaption>프로젝트 설정 → 지침 화면</figcaption></figure>
+    </div>
+    <div class="step">
+      <div><div class="tag">STEP 3</div><h3>코드 블록으로 학습 앱 만들기</h3>
+        <ol><li>프로젝트 밖의 새 채팅에 프롬프트 ③ 붙여 넣기</li><li>답변의 HTML 코드 블록 오른쪽 위 <b>▶(미리보기)</b>를 눌러 실행</li><li>미리보기 버튼이 없으면 코드를 복사해 HTML 파일로 저장 후 브라우저로 열기</li><li>잘 되는 버전은 코드 블록의 <b>내려받기</b> 또는 <b>복사</b> → HTML 파일로 저장</li><li>공유: 대화 링크보다 HTML 파일을 직접 보내는 방식 권장</li></ol></div>
+      <figure><img src="assets/img/chatgpt-3.png" alt="ChatGPT HTML 코드 블록의 미리보기 버튼과 실행된 퀴즈 앱 화면" loading="lazy"><figcaption>코드 블록 미리보기 화면</figcaption></figure>
+    </div>
+    <h3>자주 막히는 곳</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>이럴 때</th><th>이렇게</th></tr></thead>
+      <tbody>
+        <tr><th>영상에서 본 Canvas 버튼이 없음</th><td>ChatGPT Canvas는 2026년 5월 28일 GPT-5.5 모델에서 빠짐. 지금은 대화 속 코드 블록에서 바로 작업</td></tr>
+        <tr><th>미리보기 버튼이 안 보임</th><td>요금제·모델·기기에 따라 다름. 코드를 HTML 파일로 저장해 브라우저에서 열면 동일하게 확인 가능</td></tr>
+        <tr><th>코드가 중간에 끊김</th><td>"파일 전체를 처음부터 끝까지 다시 출력해 줘"라고 요청 ("이어서"는 앞뒤가 어긋나기 쉬움)</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- Claude -->
+  <section class="panel" id="claude" role="tabpanel" aria-labelledby="t-claude" hidden>
+    <dl class="info">
+      <dt>주소</dt><dd><a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a></dd>
+      <dt>추천 대상</dt><dd>평소 Claude를 주로 쓰는 사용자</dd>
+      <dt>사용 조건</dt><dd>무료 계정 가능 · 무료는 사용량 한도가 낮아 수정 요청을 신중하게 · 프로젝트 파일 용량도 작음</dd>
+      <dt>오늘 쓰는 기능</dt><dd>에이전트 → 프로젝트 &nbsp;|&nbsp; 앱 → 아티팩트</dd>
+    </dl>
+    <div class="step">
+      <div><div class="tag">STEP 1</div><h3>PRD 인터뷰</h3>
+        <ol><li>새 채팅을 열고 프롬프트 ①을 붙여 넣기</li><li>질문에 하나씩 답한 뒤 완성된 PRD를 복사해 두기</li></ol></div>
+      <figure><img src="assets/img/claude-1.png" alt="Claude 새 채팅 입력창에 PRD 인터뷰 프롬프트를 붙여 넣은 화면" loading="lazy"><figcaption>새 채팅 입력창</figcaption></figure>
+    </div>
+    <div class="step">
+      <div><div class="tag">STEP 2</div><h3>프로젝트로 학습 에이전트 만들기</h3>
+        <ol><li>사이드바 <b>프로젝트 → 새 프로젝트</b> → 이름·목표 입력 후 만들기</li><li>오른쪽 <b>지침 → 편집</b> → 프롬프트 ② 지시문 붙여 넣고 저장</li><li><b>파일 → 추가</b>로 강의자료 업로드 (긴 PDF는 용량을 넘을 수 있음)</li><li>프로젝트 안에서 새 대화 시작 → 테스트 질문</li></ol></div>
+      <figure><img src="assets/img/claude-2.png" alt="Claude 프로젝트의 지침 편집 버튼과 파일 추가 버튼" loading="lazy"><figcaption>프로젝트 지침 · 파일 화면</figcaption></figure>
+    </div>
+    <div class="step">
+      <div><div class="tag">STEP 3</div><h3>아티팩트로 학습 앱 만들기</h3>
+        <ol><li>새 채팅에 프롬프트 ③ 붙여 넣기</li><li>오른쪽 <b>아티팩트</b> 창에서 바로 실행되는 화면 확인</li><li>코드 보기로 전환해 코드 전체 복사 → <b>HTML 파일로 저장</b> (공통 탭 참고)</li><li>공유: 무료는 <b>게시(Publish)</b> → 계정 없이 열리는 공개 링크 생성</li></ol></div>
+      <figure><img src="assets/img/claude-3.png" alt="Claude 아티팩트 창에서 실행된 퀴즈 앱 화면" loading="lazy"><figcaption>아티팩트 미리보기 화면</figcaption></figure>
+    </div>
+    <h3>자주 막히는 곳</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>이럴 때</th><th>이렇게</th></tr></thead>
+      <tbody>
+        <tr><th>"사용량 한도에 도달" 안내가 뜸</th><td>수정 요청을 하나씩, 하지만 한 번에 구체적으로. 막히면 저장한 HTML 파일을 다른 도구로 가져가 이어서 작업</td></tr>
+        <tr><th>게시를 취소했다가 다시 하고 싶음</th><td>한 번 게시를 취소한 아티팩트는 다시 게시할 수 없음. 새로 만들어야 함</td></tr>
+        <tr><th>공유해도 괜찮을까?</th><td>게시 링크는 누구나 열 수 있음. 개인정보가 들어간 앱은 게시 금지</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 공통 -->
+  <section class="panel" id="common" role="tabpanel" aria-labelledby="t-common" hidden>
+    <h3>HTML 파일로 저장하기</h3>
+    <p>잘 되는 버전이 나올 때마다 저장함. 도구가 달라도 저장한 파일은 똑같이 브라우저에서 열림.</p>
+    <div class="grid c2">
+      <div class="card"><b>Windows</b>
+        <ol class="tight" style="margin-top:8px"><li>AI 도구에서 코드 전체 복사</li><li>메모장 열기 → 붙여 넣기</li><li>다른 이름으로 저장<br><span class="small muted">파일 이름: 퀴즈튜터_v1.html · 파일 형식: 모든 파일 · 인코딩: UTF-8</span></li><li>저장한 파일을 더블클릭 → 브라우저에서 실행</li></ol></div>
+      <div class="card"><b>Mac</b>
+        <ol class="tight" style="margin-top:8px"><li>AI 도구에서 코드 전체 복사</li><li>텍스트 편집기 열기</li><li>메뉴 포맷 → 일반 텍스트로 만들기</li><li>붙여 넣고 저장<br><span class="small muted">파일 이름: 퀴즈튜터_v1.html · ".txt 추가"를 물으면 .html 사용 선택</span></li><li>저장한 파일을 더블클릭 → 브라우저에서 실행</li></ol></div>
+    </div>
+    <p class="note" style="margin-top:10px">※ 한글이 깨져 보이면 인코딩을 UTF-8로 다시 저장함. 코드 맨 위에 &lt;meta charset="utf-8"&gt; 줄이 있는지도 확인.</p>
+
+    <h3>파일 이름은 버전 번호로</h3>
+    <p>퀴즈튜터_v1.html → 퀴즈튜터_v2.html → … 처럼 저장함. 수정하다 꼬이면 마지막으로 잘 되던 번호의 파일을 열어 다시 시작함.</p>
+
+    <h3>도구를 바꿔서 이어가기</h3>
+    <p>사용량 한도나 오류로 막히면, 저장한 HTML 파일과 PRD를 다른 도구에 함께 붙여 넣고 아래처럼 요청함.</p>
+    <div class="prompt">
+      <div class="bar"><span class="label">다른 도구에서 이어가기</span><button class="btn copy" type="button">복사</button></div>
+<pre>아래는 다른 AI 도구에서 만들던 학습 앱의 코드와 PRD야.
+이 코드가 마지막으로 잘 작동하던 버전이니, 여기서부터 이어서 작업하자.
+이번에 하고 싶은 수정은 [한 가지]야. 관계없는 부분은 바꾸지 마.
+
+[PRD 붙여 넣기]
+[HTML 코드 전체 붙여 넣기]</pre>
+    </div>
+
+    <h3>세 도구 한눈에 보기</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th></th><th>Gemini</th><th>ChatGPT</th><th>Claude</th></tr></thead>
+      <tbody>
+        <tr><th>에이전트</th><td>설정 → 스킬</td><td>새 프로젝트 → 지침</td><td>새 프로젝트 → 지침</td></tr>
+        <tr><th>앱 만들기</th><td>도구 → Canvas</td><td>대화 속 코드 블록</td><td>아티팩트</td></tr>
+        <tr><th>미리보기</th><td>Canvas 미리보기</td><td>코드 블록 ▶ 미리보기</td><td>아티팩트 창</td></tr>
+        <tr><th>공유</th><td>공유 링크 (웹에서만)</td><td>HTML 파일 전달</td><td>게시(Publish) 링크</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <p class="note" style="margin-top:28px">2026년 10월 기준. 메뉴 이름과 위치는 업데이트에 따라 달라질 수 있음. 이미지를 누르면 크게 볼 수 있음.</p>
+
+  <div class="pager"><a href="fix.html">← 실습 자료 2</a><a href="index.html">처음으로 →</a></div>
+  <footer class="site">바이브코딩으로 만드는 나만의 학습도구 · 윤명희(Lena) · 에세이</footer>
+</main>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>학습도구 PRD 워크시트</title>
+<meta name="description" content="실습 자료 1 — AI 인터뷰로 학습도구 PRD를 작성하고, 학습 에이전트와 학습 앱으로 옮기는 워크시트">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topnav" aria-label="실습 자료">
+  <div class="inner">
+    <a class="home" href="index.html">학습도구 실습</a>
+    <a href="prd.html" aria-current="page">1. PRD 워크시트</a>
+    <a href="fix.html">2. 수정 요청 프롬프트</a>
+    <a href="tools.html">3. 도구별 안내서</a>
+    <a href="demo.html">예시 앱</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="eyebrow">실습 자료 1</div>
+  <h1>학습도구 PRD 워크시트</h1>
+  <p class="lead">설계서 하나로 학습 에이전트와 학습 앱을 모두 만든다.</p>
+
+  <nav class="toc" aria-label="이 페이지 목차">
+    <ol>
+      <li><a href="#flow">오늘의 흐름</a></li>
+      <li><a href="#step1">STEP 1. AI 인터뷰로 PRD 작성</a></li>
+      <li><a href="#template">PRD 템플릿 (바로 작성)</a></li>
+      <li><a href="#check">넘어가기 전 체크리스트</a></li>
+      <li><a href="#example">PRD 완성 예시</a></li>
+      <li><a href="#step2">STEP 2. PRD → 학습 에이전트</a></li>
+      <li><a href="#step3">STEP 3. PRD → 학습 앱</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="flow">오늘의 흐름</h2>
+  <div class="grid c3">
+    <div class="card step-card"><div class="tag">STEP 1</div><div class="t">PRD 작성</div><p class="d">AI 인터뷰로 7개 항목 채우기</p></div>
+    <div class="card step-card"><div class="tag">STEP 2</div><div class="t">학습 에이전트</div><p class="d">PRD → 지시문 → 내 도구에 등록</p></div>
+    <div class="card step-card"><div class="tag">STEP 3</div><div class="t">학습 앱</div><p class="d">PRD → HTML 앱 → 수정 반복</p></div>
+  </div>
+  <p style="margin-top:14px">PRD(Product Requirements Document)는 "무엇을, 누구를 위해, 어떻게 만들지"를 정리한 설계서임. AI 도구는 계속 바뀌지만, 잘 쓴 PRD는 Gemini·ChatGPT·Claude 어디에든 그대로 옮겨 쓸 수 있음.</p>
+
+  <h2 id="step1"><span class="num">STEP 1</span>AI 인터뷰로 PRD 작성하기</h2>
+  <p>아래 프롬프트를 복사해 사용하는 AI 도구에 붙여 넣음. [대괄호] 부분만 본인 정보로 바꿈. AI가 한 번에 하나씩 질문하면 답하면서 PRD를 완성함.</p>
+  <div class="prompt">
+    <div class="bar"><span class="label">프롬프트 ① PRD 인터뷰</span><button class="btn copy" type="button">복사</button></div>
+<pre>너는 대학생의 학습도구 기획을 돕는 인터뷰어야.
+나는 [전공·학년]이고, [과목명]을 공부할 때 쓸 AI 학습도구를 만들고 싶어.
+아래 규칙대로 나를 인터뷰해서 학습도구 PRD(요구사항 명세서)를 완성해 줘.
+
+[규칙]
+1. 질문은 한 번에 하나만 한다. 내 답을 듣고 다음 질문으로 넘어간다.
+2. 다음 7개 항목을 순서대로 채운다.
+   ① 사용자  ② 해결할 학습 문제  ③ 입력 자료  ④ 핵심 기능
+   ⑤ 출력 형식  ⑥ 금지 사항  ⑦ 성공 기준
+3. 내 답이 모호하면 예시를 2~3개 들어 구체화를 돕는다.
+   (예: "공부가 잘 안 된다" → 개념을 모르는지, 외워도 잊는지, 문제에 적용이 안 되는지)
+4. 핵심 기능은 3개를 넘지 않게 한다. 더 많이 원하면 우선순위를 물어 3개로 줄인다.
+5. 기능이 요약·정리 위주라면, 내가 스스로 떠올려 보는 기능
+   (퀴즈, 빈칸 채우기, 직접 설명해 보기 등)을 하나 이상 넣자고 제안한다.
+6. 내용을 대신 정하지 않는다. 모든 항목은 내 답에서 나와야 한다.
+7. 7개 항목이 모두 채워지면 아래 [PRD 형식]으로 정리한다.
+8. 정리한 뒤, 빠진 내용이나 서로 충돌하는 내용이 있는지 점검해 알려 준다.
+
+[PRD 형식]
+# 학습도구 이름:
+## ① 사용자
+## ② 해결할 학습 문제
+## ③ 입력 자료
+## ④ 핵심 기능 (최대 3개, 우선순위 순)
+## ⑤ 출력 형식
+## ⑥ 금지 사항
+## ⑦ 성공 기준
+
+이제 첫 질문부터 시작해 줘.</pre>
+  </div>
+  <h3>인터뷰가 잘 안 될 때</h3>
+  <ul class="tight">
+    <li>AI가 질문을 여러 개 한꺼번에 하면: "질문은 하나씩만 해 줘"라고 다시 말함.</li>
+    <li>AI가 내용을 마음대로 채우면: "내가 말한 내용만으로 다시 정리해 줘"라고 요청함.</li>
+    <li>답이 떠오르지 않으면: "예시를 3개 보여 줘"라고 요청한 뒤 가장 가까운 것을 고쳐서 답함.</li>
+  </ul>
+
+  <h2 id="template">PRD 템플릿</h2>
+  <p>AI 인터뷰 결과를 옮겨 적거나, AI 없이 직접 작성할 때 사용함. 회색 글씨는 예시임. 작성한 내용은 이 브라우저에 임시 저장되며, <b>PRD 복사</b>를 누르면 위 [PRD 형식] 그대로 복사됨.</p>
+  <div class="builder" data-prd-builder>
+    <div class="field"><label for="f-name">학습도구 이름</label><div class="q">한 줄로 무엇을 하는 도구인지 드러나게</div><input id="f-name" data-field="name" placeholder="예: 기억 이론 인출 퀴즈 튜터"></div>
+    <div class="field"><label for="f-1">① 사용자</label><div class="q">누가, 어떤 상황에서 쓰는가?</div><textarea id="f-1" data-field="user" data-title="① 사용자" placeholder="예: 교양 심리학 수강 2학년, 중간고사 2주 전 복습할 때"></textarea></div>
+    <div class="field"><label for="f-2">② 해결할 학습 문제</label><div class="q">지금 공부에서 무엇이 막히는가? 증상을 구체적으로</div><textarea id="f-2" data-field="problem" data-title="② 해결할 학습 문제" placeholder="예: 용어는 아는데 개념 차이를 설명하라고 하면 막힘"></textarea></div>
+    <div class="field"><label for="f-3">③ 입력 자료</label><div class="q">도구가 참고할 자료는 무엇인가?</div><textarea id="f-3" data-field="input" data-title="③ 입력 자료" placeholder="예: 4~6주차 강의 PPT(PDF), 교재 7장 요약 노트"></textarea></div>
+    <div class="field"><label for="f-4">④ 핵심 기능</label><div class="q">꼭 필요한 기능 3개 이내, 우선순위 순으로</div><textarea id="f-4" data-field="features" data-title="④ 핵심 기능 (최대 3개, 우선순위 순)" placeholder="예: 1) 개념 구분 퀴즈 2) 내가 쓴 설명에 피드백 3) 틀린 개념 다시 묻기"></textarea></div>
+    <div class="field"><label for="f-5">⑤ 출력 형식</label><div class="q">결과를 어떤 모양으로 받고 싶은가?</div><textarea id="f-5" data-field="output" data-title="⑤ 출력 형식" placeholder="예: 한 번에 한 문제, 답한 뒤 정답과 근거 슬라이드 번호 제시"></textarea></div>
+    <div class="field"><label for="f-6">⑥ 금지 사항</label><div class="q">도구가 하면 안 되는 것은?</div><textarea id="f-6" data-field="forbid" data-title="⑥ 금지 사항" placeholder="예: 내가 답하기 전에 정답 먼저 보여주지 않기, 자료에 없는 내용 지어내지 않기"></textarea></div>
+    <div class="field"><label for="f-7">⑦ 성공 기준</label><div class="q">이 도구가 제대로 작동한다는 것을 어떻게 확인할까?</div><textarea id="f-7" data-field="success" data-title="⑦ 성공 기준" placeholder="예: 퀴즈 10문제 중 틀린 개념을 다음 세트에서 다시 묻는다"></textarea></div>
+    <div class="actions"><button class="btn" type="button" data-prd-copy>PRD 복사</button><button class="btn ghost" type="button" data-prd-clear>모두 지우기</button><span class="note">공용 PC라면 실습 후 "모두 지우기"를 눌러 주세요.</span></div>
+  </div>
+
+  <h2 id="check">넘어가기 전 체크리스트</h2>
+  <p>STEP 2로 넘어가기 전에 PRD를 점검함. 하나라도 비어 있으면 PRD를 먼저 고침.</p>
+  <ul class="checks" data-checks="prd">
+    <li><label><input type="checkbox"><span>핵심 기능이 3개 이하인가?</span></label></li>
+    <li><label><input type="checkbox"><span>스스로 떠올려 보는 기능(퀴즈, 빈칸, 설명해 보기)이 하나 이상 있는가?</span></label></li>
+    <li><label><input type="checkbox"><span>"학습 문제"가 증상 수준으로 구체적인가? ("공부가 안 됨" ✕ → "개념 차이를 설명 못 함" ○)</span></label></li>
+    <li><label><input type="checkbox"><span>입력 자료가 실제로 내가 가진 파일인가?</span></label></li>
+    <li><label><input type="checkbox"><span>금지 사항에 "자료에 없는 내용을 지어내지 않기"가 들어 있는가?</span></label></li>
+    <li><label><input type="checkbox"><span>성공 기준을 강의 시간 안에 직접 확인해 볼 수 있는가?</span></label></li>
+  </ul>
+  <p class="progress-line" data-checks-out="prd"></p>
+
+  <h2 id="example">PRD 완성 예시</h2>
+  <p>교양 심리학 수강생이 작성한 예시임. 전공과 과목이 달라도 7개 항목의 구체성 수준을 참고함. 이 PRD로 만든 앱은 <a href="demo.html">예시 앱</a>에서 실행해 볼 수 있음.</p>
+  <div class="prompt">
+    <div class="bar"><span class="label">완성 예시 — 기억 이론 인출 퀴즈 튜터</span><button class="btn ghost copy" type="button">복사</button></div>
+<pre># 학습도구 이름: 기억 이론 인출 퀴즈 튜터
+## ① 사용자
+교양 「심리학의 이해」 수강 2학년. 중간고사 2주 전, 하루 20분씩 복습할 때 사용.
+## ② 해결할 학습 문제
+용어(작업기억, 장기기억, 부호화, 인출)는 알지만, 두 개념의 차이를 설명하라는
+서술형 문제에서 막힘. 읽을 때는 아는 것 같은데 직접 쓰면 안 나옴.
+## ③ 입력 자료
+4~6주차 강의 슬라이드(PDF 3개), 교재 7장 내 요약 노트(Google 문서 1개).
+## ④ 핵심 기능 (우선순위 순)
+1. 두 개념의 차이를 묻는 퀴즈를 한 번에 한 문제씩 출제
+2. 내가 직접 쓴 설명을 읽고, 빠진 핵심 요소를 짚어 주는 피드백
+3. 틀리거나 부족했던 개념을 다음 세트에서 다시 출제
+## ⑤ 출력 형식
+한 번에 한 문제. 내가 답한 뒤에 모범 답안, 빠진 요소, 근거 슬라이드 번호를 제시.
+## ⑥ 금지 사항
+- 내가 답하기 전에 정답이나 힌트를 먼저 보여주지 않는다.
+- 입력 자료에 없는 내용을 지어내지 않는다. 자료에 없으면 "자료에 없음"이라고 말한다.
+## ⑦ 성공 기준
+- 10문제 세트에서 틀린 개념이 다음 세트에 다시 나온다.
+- 모든 피드백에 근거 슬라이드 번호가 붙어 있다.</pre>
+  </div>
+  <h3>이 예시가 좋은 이유</h3>
+  <ul class="tight">
+    <li><b>학습 문제가 구체적임</b> — "공부가 안 된다"가 아니라 "읽을 땐 아는데 직접 쓰면 안 나온다"는 증상까지 적음.</li>
+    <li><b>핵심 기능이 3개이고 모두 인출형임</b> — 요약이 아니라 퀴즈, 직접 설명, 다시 묻기로 스스로 떠올리게 만듦.</li>
+    <li><b>성공 기준을 바로 확인할 수 있음</b> — 퀴즈 두 세트만 풀어 보면 동작 여부를 판단할 수 있음.</li>
+  </ul>
+
+  <h2 id="step2"><span class="num">STEP 2</span>PRD → 학습 에이전트</h2>
+  <p>완성한 PRD를 지시문으로 바꿈. 같은 대화창에서 이어서 입력해도 됨.</p>
+  <div class="prompt">
+    <div class="bar"><span class="label">프롬프트 ② 에이전트 지시문 변환</span><button class="btn copy" type="button">복사</button></div>
+<pre>아래 PRD를 바탕으로 AI 학습 조교의 지시문을 작성해 줘.
+
+[조건]
+- 구성: 역할 / 대상 / 참고 자료 사용 규칙 / 대화 절차 / 출력 형식 / 금지 사항
+- AI에게 직접 지시하는 문장으로 쓴다. (예: "너는 ~이다", "~한다")
+- PRD에 없는 기능은 추가하지 않는다.
+- 1,000자 이내로 쓴다.
+- 마지막에 이 조교가 제대로 동작하는지 확인할 테스트 질문 3개를 따로 적어 준다.
+
+[PRD]
+(여기에 완성한 PRD를 붙여 넣기)</pre>
+  </div>
+  <h3>지시문을 어디에 넣나</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>Gemini</th><th>ChatGPT</th><th>Claude</th></tr></thead>
+      <tbody>
+        <tr><th>지시문을 넣는 곳</th><td>설정 → 스킬 → 요청 사항</td><td>새 프로젝트 → 프로젝트 설정 → 지침</td><td>새 프로젝트 → 지침 편집</td></tr>
+        <tr><th>자료를 넣는 곳</th><td>스킬에 PDF 첨부</td><td>프로젝트 파일에 업로드</td><td>프로젝트 파일 추가</td></tr>
+        <tr><th>불러 쓰는 법</th><td>대화창에서 / 입력 후 선택</td><td>프로젝트 안에서 새 대화</td><td>프로젝트 안에서 새 대화</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">메뉴 위치는 도구 업데이트에 따라 달라질 수 있음. 화면은 <a href="tools.html">도구별 안내서</a> 참고.</p>
+
+  <h2 id="step3"><span class="num">STEP 3</span>PRD → 학습 앱</h2>
+  <p>같은 PRD로 브라우저에서 실행되는 학습 앱을 만듦.</p>
+  <div class="prompt">
+    <div class="bar"><span class="label">프롬프트 ③ 학습 앱 제작</span><button class="btn copy" type="button">복사</button></div>
+<pre>아래 PRD로 학습 앱을 만들어 줘.
+
+[조건]
+- HTML 파일 하나로 만든다. (CSS와 JavaScript도 같은 파일 안에)
+- 서버, 로그인, 외부 API 없이 브라우저에서 파일을 열면 바로 실행되게 한다.
+- 화면 글자는 모두 한국어로, 휴대폰에서도 보기 좋게 만든다.
+- PRD의 핵심 기능만 구현한다. 내가 요청하지 않은 기능은 넣지 않는다.
+- 문제·정답 데이터는 코드 맨 위 한곳에 모아, 내가 직접 고칠 수 있게 한다.
+
+[진행 방식]
+바로 만들지 말고, 먼저 화면 구성과 기능을 5줄 이내로 요약해서 보여 줘.
+내가 "좋아"라고 하면 그때 만든다.
+
+[PRD]
+(여기에 완성한 PRD를 붙여 넣기)</pre>
+  </div>
+  <h3>앱을 고칠 때 지킬 것</h3>
+  <ul class="tight">
+    <li>한 번에 하나만 고쳐 달라고 요청함. 여러 개를 한꺼번에 요청하면 잘 되던 기능이 깨지기 쉬움.</li>
+    <li>잘 동작하는 버전이 나오면 HTML 파일로 먼저 저장한 뒤 다음 수정을 요청함.</li>
+    <li>버그는 "안 돼"가 아니라 "무엇을 눌렀더니 / 무엇을 기대했는데 / 실제로 어떻게 됐는지"로 설명함.</li>
+  </ul>
+  <p>자세한 수정 요청 방법은 <a href="fix.html">실습 자료 2</a>에 정리되어 있음.</p>
+
+  <div class="pager"><a href="index.html">← 처음으로</a><a href="fix.html">실습 자료 2 →</a></div>
+  <footer class="site">바이브코딩으로 만드는 나만의 학습도구 · 윤명희(Lena) · 에세이</footer>
+</main>
+<script src="assets/app.js"></script>
+</body>
+</html>

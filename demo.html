@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기억 이론 인출 퀴즈 튜터</title>
+<style>
+  :root {
+    --accent: #2F4B8F;
+    --accent-soft: #EEF1F8;
+    --ink: #1F2430;
+    --sub: #5B6270;
+    --line: #DCE0E8;
+    --bg: #F7F8FA;
+    --ok: #1E7A4C;
+    --ok-soft: #E6F4EC;
+    --miss: #B3412E;
+    --miss-soft: #FBEAE6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 24px 16px 48px; }
+  header { margin-bottom: 20px; }
+  header .eyebrow { font-size: 13px; color: var(--sub); }
+  header h1 { margin: 2px 0 0; font-size: 22px; color: var(--accent); }
+  .card {
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  .meta { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--sub); margin-bottom: 10px; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 600; font-size: 12px; }
+  .badge.retry { background: var(--miss-soft); color: var(--miss); }
+  .progress { height: 6px; background: var(--accent-soft); border-radius: 999px; overflow: hidden; margin-bottom: 18px; }
+  .progress > div { height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+  .question { font-size: 18px; font-weight: 700; margin: 4px 0 14px; }
+  textarea {
+    width: 100%; min-height: 140px; padding: 12px; font: inherit; font-size: 15px;
+    border: 1px solid var(--line); border-radius: 10px; resize: vertical; color: var(--ink);
+  }
+  textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+  .hint { font-size: 13px; color: var(--sub); margin-top: 6px; }
+  .btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  button {
+    font: inherit; font-size: 15px; font-weight: 600; padding: 10px 18px; border-radius: 10px;
+    border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer;
+  }
+  button.ghost { background: #fff; color: var(--accent); }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+  h3 { font-size: 15px; margin: 18px 0 8px; color: var(--accent); }
+  .elements { list-style: none; padding: 0; margin: 0; }
+  .elements li { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 10px; margin-bottom: 6px; font-size: 15px; }
+  .elements li.hit { background: var(--ok-soft); }
+  .elements li.miss { background: var(--miss-soft); }
+  .elements .mark { font-weight: 700; min-width: 64px; font-size: 13px; padding-top: 1px; }
+  .hit .mark { color: var(--ok); }
+  .miss .mark { color: var(--miss); }
+  .mine, .model { padding: 12px; border-radius: 10px; font-size: 15px; white-space: pre-wrap; }
+  .mine { background: var(--bg); border: 1px dashed var(--line); }
+  .model { background: var(--accent-soft); }
+  .source { font-size: 13px; color: var(--sub); margin-top: 6px; }
+  .notice { font-size: 13px; color: var(--sub); background: var(--bg); border-radius: 10px; padding: 10px 12px; margin-top: 12px; }
+  label.retry { display: flex; gap: 8px; align-items: center; margin-top: 14px; font-size: 15px; font-weight: 600; cursor: pointer; }
+  label.retry input { width: 18px; height: 18px; accent-color: var(--miss); }
+  .summary-list { list-style: none; padding: 0; margin: 0; }
+  .summary-list li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+  .summary-list li:last-child { border-bottom: 0; }
+  .big { font-size: 28px; font-weight: 800; color: var(--accent); }
+  .muted { color: var(--sub); font-size: 14px; }
+  footer { text-align: center; font-size: 12px; color: var(--sub); margin-top: 24px; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<script>
+/* ============================================================
+   문제 데이터 — 이 부분만 고치면 다른 과목으로 바꿀 수 있음
+   - question : 학생에게 보여줄 질문
+   - elements : 좋은 답에 들어가야 할 핵심 요소
+       name     : 요소 이름 (피드백에 표시)
+       keywords : 답에 이 중 하나라도 있으면 "포함"으로 판단
+   - model    : 모범 답안
+   - source   : 근거 자료 위치
+   ※ 아래 내용과 출처 표기는 시연용 예시임
+   ============================================================ */
+const QUESTIONS = [
+  {
+    id: "sensory-stm",
+    question: "감각기억과 단기기억의 차이를 설명해 보세요.",
+    elements: [
+      { name: "지속 시간 차이 (감각기억은 1초 안팎, 단기기억은 수십 초)", keywords: ["초", "순간", "짧", "지속"] },
+      { name: "용량 차이 (감각기억은 크고, 단기기억은 제한됨)", keywords: ["용량", "7", "제한", "많은 정보", "개수"] },
+      { name: "주의를 받은 정보만 단기기억으로 넘어감", keywords: ["주의", "선택", "집중"] }
+    ],
+    model: "감각기억은 감각 기관으로 들어온 많은 정보를 1초 안팎의 아주 짧은 시간 동안 그대로 붙잡아 둔다. 이 중 주의를 받은 정보만 단기기억으로 넘어간다. 단기기억은 약 20~30초 정도 유지되며, 한 번에 담을 수 있는 양이 7±2개 정도로 제한된다.",
+    source: "(예시) 4주차 슬라이드 8~10"
+  },
+  {
+    id: "stm-ltm",
+    question: "단기기억과 장기기억의 차이를 설명해 보세요.",
+    elements: [
+      { name: "용량 차이 (단기기억은 제한, 장기기억은 사실상 무제한)", keywords: ["용량", "제한", "무제한", "7"] },
+      { name: "지속 시간 차이 (수십 초 vs 오래·영구적)", keywords: ["초", "오래", "영구", "지속", "평생"] },
+      { name: "시연·부호화를 거쳐 장기기억으로 옮겨짐", keywords: ["시연", "부호화", "반복", "옮", "전이", "저장"] }
+    ],
+    model: "단기기억은 용량이 7±2개 정도로 제한되고 시연하지 않으면 수십 초 안에 사라진다. 장기기억은 용량이 사실상 무제한이고 오랫동안 유지된다. 단기기억의 정보는 시연과 부호화를 거쳐 장기기억으로 옮겨진다.",
+    source: "(예시) 4주차 슬라이드 11~13"
+  },
+  {
+    id: "wm-stm",
+    question: "작업기억은 단기기억과 무엇이 다른가요?",
+    elements: [
+      { name: "단순 보관이 아니라 정보를 조작·처리함", keywords: ["조작", "처리", "활용", "계산", "작업"] },
+      { name: "여러 하위 구성요소로 이루어짐 (음운 고리, 시공간 잡기장, 중앙 집행기 등)", keywords: ["음운", "시공간", "중앙", "집행", "구성"] },
+      { name: "배들리(Baddeley)의 모형", keywords: ["배들리", "baddeley", "배드리"] }
+    ],
+    model: "단기기억이 정보를 잠시 보관하는 저장소라면, 작업기억은 보관한 정보를 활용해 계산·추론·이해 같은 처리를 하는 작업 공간이다. 배들리의 모형에 따르면 작업기억은 음운 고리, 시공간 잡기장, 중앙 집행기 등의 구성요소로 이루어진다.",
+    source: "(예시) 4주차 슬라이드 14~17"
+  },
+  {
+    id: "encoding-retrieval",
+    question: "부호화와 인출의 차이를 설명해 보세요.",
+    elements: [
+      { name: "부호화는 정보를 저장할 수 있는 형태로 바꿔 넣는 과정", keywords: ["넣", "저장", "변환", "바꾸", "입력"] },
+      { name: "인출은 저장된 정보를 다시 꺼내는 과정", keywords: ["꺼내", "떠올", "회상", "찾", "끄집"] },
+      { name: "인출 단서가 인출을 도움", keywords: ["단서", "힌트", "맥락"] }
+    ],
+    model: "부호화는 들어온 정보를 기억에 저장할 수 있는 형태로 바꿔 넣는 과정이고, 인출은 저장된 정보를 필요할 때 다시 꺼내는 과정이다. 인출은 단서가 있을 때 더 잘 일어난다.",
+    source: "(예시) 5주차 슬라이드 3~5"
+  },
+  {
+    id: "maintenance-elaborative",
+    question: "유지 시연과 정교화 시연의 차이는 무엇인가요?",
+    elements: [
+      { name: "유지 시연은 같은 내용을 단순 반복함", keywords: ["반복", "되뇌", "외우"] },
+      { name: "정교화 시연은 이미 아는 지식과 의미를 연결함", keywords: ["의미", "연결", "관련", "기존", "아는"] },
+      { name: "정교화 시연이 장기기억에 더 효과적", keywords: ["장기", "오래", "효과", "더 잘"] }
+    ],
+    model: "유지 시연은 전화번호를 되뇌듯 같은 내용을 단순히 반복해 단기기억에 붙잡아 두는 것이다. 정교화 시연은 새 정보를 이미 알고 있는 지식과 의미적으로 연결하는 것으로, 장기기억에 남기는 데 더 효과적이다.",
+    source: "(예시) 5주차 슬라이드 6~8"
+  },
+  {
+    id: "episodic-semantic",
+    question: "일화기억과 의미기억을 구분해 보세요.",
+    elements: [
+      { name: "일화기억은 언제·어디서 겪은 개인적 경험", keywords: ["경험", "사건", "언제", "어디", "개인"] },
+      { name: "의미기억은 일반적인 지식·사실·개념", keywords: ["지식", "사실", "개념", "의미"] },
+      { name: "둘 다 서술(외현)기억에 속함", keywords: ["서술", "외현", "선언"] }
+    ],
+    model: "일화기억은 '지난주 수업에서 발표했던 일'처럼 언제, 어디서 겪었는지가 함께 저장된 개인적 경험의 기억이다. 의미기억은 '서울은 한국의 수도다'처럼 경험 맥락과 상관없는 일반적인 지식과 개념이다. 둘 다 말로 설명할 수 있는 서술기억에 속한다.",
+    source: "(예시) 5주차 슬라이드 10~12"
+  },
+  {
+    id: "declarative-procedural",
+    question: "서술기억과 절차기억의 차이를 설명해 보세요.",
+    elements: [
+      { name: "서술기억은 말로 설명할 수 있는 사실·사건", keywords: ["말로", "설명", "사실", "사건", "서술"] },
+      { name: "절차기억은 몸에 익은 기술·습관", keywords: ["기술", "습관", "자전거", "운동", "방법", "몸"] },
+      { name: "외현(의식적) vs 암묵(무의식적)", keywords: ["외현", "암묵", "의식", "무의식", "자동"] }
+    ],
+    model: "서술기억은 사실이나 사건처럼 의식적으로 떠올려 말로 설명할 수 있는 외현기억이다. 절차기억은 자전거 타기처럼 반복을 통해 몸에 익은 기술과 습관으로, 의식하지 않아도 자동으로 수행되는 암묵기억이다.",
+    source: "(예시) 5주차 슬라이드 13~14"
+  },
+  {
+    id: "interference",
+    question: "순행간섭과 역행간섭의 차이를 설명해 보세요.",
+    elements: [
+      { name: "순행간섭: 예전에 배운 것이 새로 배운 것을 방해", keywords: ["예전", "이전", "과거", "먼저", "옛"] },
+      { name: "역행간섭: 새로 배운 것이 예전 기억을 방해", keywords: ["새로", "나중", "최근", "새"] },
+      { name: "간섭이 망각의 원인이 됨", keywords: ["망각", "잊", "방해"] }
+    ],
+    model: "순행간섭은 먼저 배운 내용이 나중에 배운 내용을 떠올리는 것을 방해하는 것이다(예: 예전 비밀번호 때문에 새 비밀번호가 헷갈림). 역행간섭은 나중에 배운 내용이 먼저 배운 내용을 떠올리는 것을 방해하는 것이다. 둘 다 망각의 주요 원인이다.",
+    source: "(예시) 6주차 슬라이드 4~6"
+  },
+  {
+    id: "recall-recognition",
+    question: "회상과 재인의 차이는 무엇이고, 어느 쪽이 더 쉬운가요?",
+    elements: [
+      { name: "회상은 단서 없이 스스로 떠올림", keywords: ["스스로", "단서 없", "떠올", "서술형", "빈칸"] },
+      { name: "재인은 제시된 것 중에서 알아봄", keywords: ["제시", "보기", "알아", "객관식", "고르"] },
+      { name: "일반적으로 재인이 더 쉬움", keywords: ["재인이 더 쉽", "재인이 쉽", "재인이 더 쉬", "재인 쪽이"] }
+    ],
+    model: "회상은 서술형 문제처럼 단서 없이 기억에서 스스로 정보를 떠올리는 것이고, 재인은 객관식 문제처럼 제시된 보기 중에서 본 적 있는 것을 알아보는 것이다. 재인은 단서가 주어지므로 일반적으로 회상보다 쉽다.",
+    source: "(예시) 6주차 슬라이드 7~8"
+  },
+  {
+    id: "massed-spaced",
+    question: "집중 학습과 분산 학습의 차이와, 장기기억에 유리한 쪽을 설명해 보세요.",
+    elements: [
+      { name: "집중 학습은 한 번에 몰아서 공부함", keywords: ["몰아", "한 번에", "벼락", "한꺼번"] },
+      { name: "분산 학습은 시간 간격을 두고 나눠서 공부함", keywords: ["간격", "나눠", "나누", "여러 번", "분산"] },
+      { name: "분산 학습이 장기 파지에 유리함 (간격 효과)", keywords: ["분산 학습이", "분산이", "간격 효과", "간격효과", "오래"] }
+    ],
+    model: "집중 학습은 같은 내용을 한 번에 몰아서 공부하는 것이고, 분산 학습은 같은 총 시간을 여러 번에 나눠 간격을 두고 공부하는 것이다. 시험 직후에는 비슷해 보여도, 오래 기억하는 데는 분산 학습이 더 유리하다. 이를 간격 효과라고 한다.",
+    source: "(예시) 6주차 슬라이드 10~12"
+  }
+];
+
+const SET_SIZE = 5;          // 한 세트 문제 수
+const MIN_ANSWER_LENGTH = 15; // 이 글자 수 이상 써야 제출 가능
+</script>
+
+  <header>
+    <div class="eyebrow">교양 심리학의 이해 · 4~6주차 복습</div>
+    <h1>기억 이론 인출 퀴즈 튜터</h1>
+  </header>
+
+  <!-- 시작 화면 -->
+  <section id="start" class="card">
+    <p style="margin-top:0"><strong>읽을 때는 아는 것 같은데, 직접 쓰면 안 나오나요?</strong></p>
+    <p class="muted">개념 차이를 묻는 질문에 내 말로 먼저 답을 쓰면, 빠진 핵심 요소를 짚어 줍니다. 부족했던 개념은 다음 세트에서 다시 나옵니다.</p>
+    <ul class="muted" style="padding-left:18px">
+      <li>한 세트 <span id="setSizeText"></span>문제, 한 번에 한 문제씩</li>
+      <li>답을 쓰기 전에는 정답을 볼 수 없음</li>
+      <li>틀리거나 부족했던 개념은 다음 세트 앞쪽에 다시 출제</li>
+    </ul>
+    <div class="btns"><button id="startBtn">첫 세트 시작</button></div>
+  </section>
+
+  <!-- 문제 화면 -->
+  <section id="quiz" class="card hidden">
+    <div class="meta">
+      <span id="qCount"></span>
+      <span id="qBadge" class="badge"></span>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    <div id="qText" class="question"></div>
+
+    <div id="answerArea">
+      <textarea id="answer" placeholder="교재를 보지 말고, 내 말로 먼저 써 보세요."></textarea>
+      <div id="lenHint" class="hint"></div>
+      <div class="btns"><button id="submitBtn" disabled>답 제출하고 피드백 보기</button></div>
+    </div>
+
+    <div id="feedback" class="hidden">
+      <h3>핵심 요소 점검</h3>
+      <ul id="elements" class="elements"></ul>
+      <div class="notice">키워드를 기준으로 자동 점검한 결과입니다. 같은 뜻을 다른 말로 썼다면 "포함 안 됨"으로 나올 수 있으니, 아래 모범 답안과 직접 비교해 보세요.</div>
+
+      <h3>내 답</h3>
+      <div id="mine" class="mine"></div>
+
+      <h3>모범 답안</h3>
+      <div id="model" class="model"></div>
+      <div id="source" class="source"></div>
+
+      <label class="retry"><input type="checkbox" id="retryCheck"> 이 개념을 다음 세트에서 다시 풀기</label>
+
+      <div class="btns"><button id="nextBtn">다음 문제</button></div>
+    </div>
+  </section>
+
+  <!-- 세트 결과 화면 -->
+  <section id="summary" class="card hidden">
+    <div class="muted" id="setLabel"></div>
+    <div class="big" id="scoreText"></div>
+    <p class="muted" style="margin-top:4px">핵심 요소를 모두 포함한 문제 수</p>
+    <h3>이번 세트 결과</h3>
+    <ul id="summaryList" class="summary-list"></ul>
+    <p id="nextInfo" class="muted"></p>
+    <div class="btns">
+      <button id="nextSetBtn">다음 세트 시작</button>
+      <button id="restartBtn" class="ghost">처음부터 다시</button>
+    </div>
+  </section>
+
+  <footer>문제 데이터와 출처 표기는 시연용 예시입니다 · 바이브코딩으로 만드는 나만의 학습도구</footer>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+
+let retryQueue = [];   // 다음 세트에서 다시 물을 문제 id
+let seen = new Set();  // 한 번이라도 출제된 문제 id
+let setNo = 0;
+let currentSet = [];
+let idx = 0;
+let results = [];      // { q, hitCount, total, retry }
+
+$("setSizeText").textContent = SET_SIZE;
+
+function normalize(s) { return s.replace(/\s+/g, "").toLowerCase(); }
+
+function buildSet() {
+  const byId = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
+  const set = [];
+  // 1) 다시 풀 문제 먼저
+  for (const id of retryQueue) {
+    if (set.length >= SET_SIZE) break;
+    if (byId[id]) set.push({ q: byId[id], isRetry: true });
+  }
+  // 2) 아직 안 나온 문제
+  const unseen = QUESTIONS.filter(q => !seen.has(q.id) && !retryQueue.includes(q.id));
+  shuffle(unseen);
+  for (const q of unseen) { if (set.length >= SET_SIZE) break; set.push({ q, isRetry: false }); }
+  // 3) 그래도 모자라면 전체에서 채움
+  if (set.length < SET_SIZE) {
+    const rest = QUESTIONS.filter(q => !set.some(s => s.q.id === q.id));
+    shuffle(rest);
+    for (const q of rest) { if (set.length >= SET_SIZE) break; set.push({ q, isRetry: false }); }
+  }
+  return set;
+}
+
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+
+function show(id) {
+  ["start", "quiz", "summary"].forEach(s => $(s).classList.toggle("hidden", s !== id));
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function startSet() {
+  setNo += 1;
+  currentSet = buildSet();
+  retryQueue = [];
+  idx = 0;
+  results = [];
+  show("quiz");
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const { q, isRetry } = currentSet[idx];
+  seen.add(q.id);
+  $("qCount").textContent = `세트 ${setNo} · ${idx + 1} / ${currentSet.length}`;
+  $("qBadge").textContent = isRetry ? "다시 풀기" : "새 문제";
+  $("qBadge").className = "badge" + (isRetry ? " retry" : "");
+  $("bar").style.width = `${(idx / currentSet.length) * 100}%`;
+  $("qText").textContent = q.question;
+  $("answer").value = "";
+  $("answer").disabled = false;
+  $("answerArea").classList.remove("hidden");
+  $("feedback").classList.add("hidden");
+  updateLen();
+  $("answer").focus();
+}
+
+function updateLen() {
+  const n = $("answer").value.trim().length;
+  const ok = n >= MIN_ANSWER_LENGTH;
+  $("submitBtn").disabled = !ok;
+  $("lenHint").textContent = ok ? `${n}자` : `${n}자 · ${MIN_ANSWER_LENGTH}자 이상 써야 제출할 수 있어요`;
+}
+
+function submit() {
+  const { q } = currentSet[idx];
+  const raw = $("answer").value.trim();
+  const ans = normalize(raw);
+  let hitCount = 0;
+  $("elements").innerHTML = "";
+  q.elements.forEach(el => {
+    const hit = el.keywords.some(k => ans.includes(normalize(k)));
+    if (hit) hitCount++;
+    const li = document.createElement("li");
+    li.className = hit ? "hit" : "miss";
+    li.innerHTML = `<span class="mark">${hit ? "포함됨" : "포함 안 됨"}</span><span></span>`;
+    li.lastChild.textContent = el.name;
+    $("elements").appendChild(li);
+  });
+  $("mine").textContent = raw;
+  $("model").textContent = q.model;
+  $("source").textContent = `근거: ${q.source}`;
+  $("retryCheck").checked = hitCount < q.elements.length;
+  $("nextBtn").textContent = idx === currentSet.length - 1 ? "세트 결과 보기" : "다음 문제";
+  results[idx] = { q, hitCount, total: q.elements.length };
+  $("answerArea").classList.add("hidden");
+  $("feedback").classList.remove("hidden");
+  $("bar").style.width = `${((idx + 1) / currentSet.length) * 100}%`;
+}
+
+function next() {
+  results[idx].retry = $("retryCheck").checked;
+  if (results[idx].retry) retryQueue.push(results[idx].q.id);
+  idx += 1;
+  if (idx < currentSet.length) renderQuestion();
+  else renderSummary();
+}
+
+function renderSummary() {
+  const full = results.filter(r => r.hitCount === r.total).length;
+  $("setLabel").textContent = `세트 ${setNo} 결과`;
+  $("scoreText").textContent = `${full} / ${results.length}`;
+  $("summaryList").innerHTML = "";
+  results.forEach(r => {
+    const li = document.createElement("li");
+    const left = document.createElement("span");
+    left.textContent = r.q.question;
+    const right = document.createElement("span");
+    right.style.whiteSpace = "nowrap";
+    right.style.fontWeight = "600";
+    right.style.color = r.retry ? "var(--miss)" : "var(--ok)";
+    right.textContent = `${r.hitCount}/${r.total}` + (r.retry ? " · 다시" : "");
+    li.append(left, right);
+    $("summaryList").appendChild(li);
+  });
+  $("nextInfo").textContent = retryQueue.length
+    ? `다음 세트에서 ${retryQueue.length}개 개념을 먼저 다시 묻습니다.`
+    : "다시 풀 개념이 없습니다. 다음 세트는 새 문제로 구성됩니다.";
+  show("summary");
+}
+
+$("startBtn").addEventListener("click", startSet);
+$("answer").addEventListener("input", updateLen);
+$("submitBtn").addEventListener("click", submit);
+$("nextBtn").addEventListener("click", next);
+$("nextSetBtn").addEventListener("click", startSet);
+$("restartBtn").addEventListener("click", () => { retryQueue = []; seen = new Set(); setNo = 0; show("start"); });
+</script>
+</body>
+</html>
