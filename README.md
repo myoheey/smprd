@@ -10,6 +10,8 @@
 | `tools.html` | 실습 자료 3 · 도구별 실습 안내서 (Gemini · ChatGPT · Claude 탭) |
 | `demo.html` | 예시 앱 · 기억 이론 인출 퀴즈 튜터 |
 
+명지전문대학 강의용 페이지는 `mjc/` 폴더에 있음 (같은 내용, 기관명만 다름).
+
 정적 HTML이라 GitHub Pages(Settings → Pages → Branch: `main` / root)로 바로 배포됨.
 도구별 기능과 메뉴 위치는 2026년 10월 기준.
 
