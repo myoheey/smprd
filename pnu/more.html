@@ -22,23 +22,71 @@
 <main class="wrap">
   <div class="eyebrow">시연 · 정리</div>
   <h1>같은 설계, 다른 실행 환경</h1>
-  <p class="lead">오늘 쓴 PRD는 학내 계정의 스킬과 자동화뿐 아니라, 더 강력한 에이전트와 앱으로도 그대로 옮겨짐.</p>
+  <p class="lead">오늘 쓴 PRD는 학내 계정의 스킬과 자동화뿐 아니라, 스스로 계획하는 에이전트와 학습 앱으로도 그대로 옮겨짐. 도구는 바뀌어도 설계서는 남음.</p>
 
-  <h2 id="task"><span class="num">시연</span>Gemini 작업(Task)과 예약됨(Scheduled)</h2>
+  <h2 id="ladder">에이전트 사다리 — 오늘 어디까지 올라왔나</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>단계</th><th>새로 생기는 것</th><th>오늘</th></tr></thead>
+    <tbody>
+      <tr><th>프롬프트</th><td>한 번 쓰고 끝</td><td>—</td></tr>
+      <tr><th>스킬</th><td><b>기억</b> — 지시문과 자료 저장</td><td>STEP 2 실습</td></tr>
+      <tr><th>자동화</th><td><b>트리거</b> — 정해진 때 실행</td><td>STEP 3 실습</td></tr>
+      <tr><th>판단형 에이전트</th><td><b>판단 + 도구 사용</b> — 상황을 보고 여러 앱에서 행동</td><td>STEP 3 예시 플로우</td></tr>
+      <tr><th>자율 에이전트</th><td><b>계획</b> — 목표만 주면 단계를 스스로 설계</td><td>시연 ① Task</td></tr>
+      <tr><th>에이전트가 만든 도구</th><td><b>제작</b> — 설계서로 앱 자체를 만듦</td><td>시연 ② AI Studio</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="task"><span class="num">시연 ①</span>Gemini 작업(Task)과 예약됨(Scheduled)</h2>
   <p>예전 이름은 Gemini Spark. 지금은 Gemini 입력창 아래 <b>채팅 / 작업(Task)</b> 전환으로 쓰고, 반복 실행은 왼쪽 사이드바의 <b>예약됨(Scheduled)</b>에서 관리함.</p>
   <div class="grid c2">
     <div class="card"><b>작업(Task)</b><p class="small muted" style="margin:6px 0 0">여러 단계를 스스로 계획하고, Gmail·캘린더·Drive 같은 앱과 웹을 오가며 끝까지 처리하는 에이전트. 결과는 확인 후 승인하는 방식.</p></div>
     <div class="card"><b>예약됨(Scheduled)</b><p class="small muted" style="margin:6px 0 0">작업을 정해진 시간에 맞춰 백그라운드에서 반복 실행. 채팅의 예약 작업과는 다른 기능.</p></div>
   </div>
   <div class="callout" style="margin-top:14px"><b>내 계정에서 쓰려면</b> 개인 Google 계정 + Google AI Pro 또는 Ultra 구독 + 만 18세 이상 + 활동 기록 보관 사용. <b>학교 계정에서는 쓸 수 없어</b> 오늘은 강사 시연으로만 진행함.</div>
+  <h3>시연에서 볼 것</h3>
+  <p>STEP 3에서 블록으로 직접 설계한 일을, Task에는 목표 한 문장으로 맡김. <b>누가 단계를 설계했는지</b>가 차이.</p>
+  <div class="prompt">
+    <div class="bar"><span class="label">Task에 주는 목표 (시연용)</span><button class="btn ghost copy" type="button">복사</button></div>
+<pre>내 Gmail에서 이번 주에 온 수업 과제·시험 공지를 찾아서
+1) 마감일 순서로 과목 · 할 일 · 마감을 표로 정리하고
+2) 마감 일정을 내 캘린더에 추가하고
+3) 과목마다 과제 전에 떠올려 볼 개념 질문을 2개씩 만들어 줘. 정답은 쓰지 마.</pre>
+  </div>
+  <div class="grid c2">
+    <div class="card"><b>사람이 설계한 플로우 (Studio)</b><p class="small muted" style="margin:6px 0 0">단계가 눈에 보이고 매번 같은 방식으로 실행. 예측 가능하지만 정해진 일만 함.</p></div>
+    <div class="card"><b>AI가 계획한 작업 (Task)</b><p class="small muted" style="margin:6px 0 0">처음 보는 상황도 처리하고 방법을 스스로 정함. 유연하지만 과정을 확인하고 승인해야 함.</p></div>
+  </div>
+  <p><b>생각해 볼 질문</b> — 내 성적과 관련된 일이라면 어느 쪽에 맡기겠는가? 왜?</p>
+
+  <h2 id="studio-app"><span class="num">시연 ②</span>같은 PRD로 학습 앱 만들기 — Google AI Studio</h2>
+  <p><a href="https://aistudio.google.com" target="_blank" rel="noopener">aistudio.google.com</a>의 <b>Build</b>에서 원하는 앱을 말로 설명하면 AI가 앱 전체(화면 + 서버)를 만듦. 대화로 계속 고치고, 코드를 내려받거나 GitHub로 보낼 수 있음.</p>
+  <div class="prompt">
+    <div class="bar"><span class="label">AI Studio Build에 넣는 프롬프트</span><button class="btn ghost copy" type="button">복사</button></div>
+<pre>아래 PRD로 대학생용 학습 앱을 만들어 줘.
+
+- 한 화면에서 쓰는 웹 앱. 한국어 UI, 휴대폰에서도 보기 좋게.
+- 학생이 강의 내용을 붙여 넣으면 Gemini가 개념 차이를 묻는 질문을 하나씩 낸다.
+- 학생이 직접 답을 쓰면 빠진 핵심 요소를 힌트로 짚어 준다. 두 번 막히기 전에는 정답을 보여주지 않는다.
+- 맞힌 문제 / 다시 볼 문제를 화면에 따로 모아 보여 준다.
+- PRD의 금지 사항을 그대로 지킨다.
+
+[PRD]
+(STEP 1에서 만든 PRD 붙여 넣기)</pre>
+  </div>
+  <ul class="tight">
+    <li><b>학교 계정으로도 Build 사용 가능.</b> 다만 Workspace(학교) 계정은 무료 공개 배포(Publish) 대상이 아니어서, 친구에게 링크로 공개하려면 개인 계정이 필요함.</li>
+    <li><b>무료 사용 시 입력 내용이 서비스 개선에 쓰일 수 있음.</b> 개인정보·성적·남의 과제는 넣지 않기.</li>
+    <li>만든 앱이 Gemini를 부를 때는 만든 사람의 사용량 한도를 씀. 공개하면 방문자 사용량도 내 한도에서 빠짐.</li>
+  </ul>
 
   <h3>PRD가 옮겨 가는 곳</h3>
   <div class="table-wrap"><table>
-    <thead><tr><th>PRD 항목</th><th>학내 계정 (오늘 실습)</th><th>작업(Task) · 예약됨</th></tr></thead>
+    <thead><tr><th>PRD 항목</th><th>오늘 실습 (스킬 · Studio)</th><th>작업(Task) · 예약됨</th><th>AI Studio 앱</th></tr></thead>
     <tbody>
-      <tr><th>① ~ ⑦ 지시문</th><td>스킬의 요청 사항</td><td>작업에 지정하는 스킬</td></tr>
-      <tr><th>③ 입력 자료</th><td>스킬에 첨부한 PDF</td><td>Drive · Gmail 등 연결 앱</td></tr>
-      <tr><th>⑧ 실행 조건</th><td>Studio · 예약 작업</td><td>예약됨(Scheduled)</td></tr>
+      <tr><th>① ~ ⑦ 지시문</th><td>스킬의 요청 사항</td><td>작업의 목표와 규칙</td><td>앱의 기능과 화면 요구사항</td></tr>
+      <tr><th>③ 입력 자료</th><td>스킬에 첨부한 PDF</td><td>Drive · Gmail 등 연결 앱</td><td>학생이 붙여 넣는 강의 내용</td></tr>
+      <tr><th>⑧ 실행 조건</th><td>Studio 플로우 · 예약 작업</td><td>예약됨(Scheduled)</td><td>학생이 열 때마다</td></tr>
     </tbody>
   </table></div>
 
@@ -60,7 +108,7 @@
 
   <h2 id="next">다음 한 걸음</h2>
   <ul class="tight">
-    <li>같은 PRD로 학습 앱 만들기 — Gemini 입력창의 <b>도구 → Canvas</b>에서 "이 PRD로 HTML 퀴즈 앱을 만들어 줘"</li>
+    <li>같은 PRD로 학습 앱 만들기 — <b>AI Studio Build</b>에 위 프롬프트로 직접 만들어 보기 (가볍게는 Gemini의 <b>Canvas</b>도 가능)</li>
     <li>다른 과목으로 옮기기 — PRD의 ②③④만 바꿔 새 스킬 만들기</li>
     <li>시험이 끝나면 자동화 <b>일시중지</b></li>
   </ul>
