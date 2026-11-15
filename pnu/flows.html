@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio 예시 플로우</title>
+<meta name="description" content="STEP 3 — 대학생 학습용 Workspace Studio 에이전트 플로우 5종">
+<link rel="stylesheet" href="../assets/fonts/pretendard.css">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topnav" aria-label="실습 자료">
+  <div class="inner">
+    <a class="home" href="index.html">부산대 실습</a>
+    <a href="prd.html">1. PRD</a>
+    <a href="skill.html">2. 스킬</a>
+    <a href="auto.html">3. 자동화</a>
+    <a href="flows.html" aria-current="page">예시 플로우</a>
+    <a href="more.html">시연·정리</a>
+  </div>
+</nav>
+<main class="wrap">
+  <div class="eyebrow">STEP 3 · 예시 플로우</div>
+  <h1>Workspace Studio 예시 플로우</h1>
+  <p class="lead">대학생 학습에 바로 쓰는 에이전트 5종. 쉬운 것부터 순서대로이며, <b>FLOW 2가 오늘의 핵심 실습</b>. 블록 이름은 영어 화면 기준이고, 아래 회색 글씨가 뜻.</p>
+
+  <div class="callout"><b>시작 전</b> <a href="https://studio.workspace.google.com" target="_blank" rel="noopener">studio.workspace.google.com</a>에 학내 계정으로 접속 → <b>+</b>(새 플로우). 컴퓨터 브라우저에서만 만들 수 있음. 만 18세 미만 학교 계정은 AI 단계를 쓸 수 없음.</div>
+
+  <nav class="toc" aria-label="플로우 목록"><ol>
+    <li><a href="#f1">아침 학습 브리핑</a> — 입문 · 시간에 따라 실행</li>
+    <li><a href="#f2">수업 공지 비서</a> — 핵심 실습 · 판단하고 행동</li>
+    <li><a href="#f3">강의자료 자동 보관</a> — 첨부파일을 Drive로</li>
+    <li><a href="#f4">스터디 질문함</a> — 폼 응답을 판단해 두 갈래로</li>
+    <li><a href="#f5">주간 학습 회고</a> — FLOW 2가 쌓은 기록을 다시 활용</li>
+    <li><a href="#design">나만의 플로우 설계표</a></li>
+  </ol></nav>
+
+  <h2>에이전트를 이루는 블록 4가지</h2>
+  <div class="grid c2 legend">
+    <div class="card"><span class="kind k-start">시작 조건</span><p>언제 움직이나 — 정해진 시간, 메일 도착, 폼 응답</p></div>
+    <div class="card"><span class="kind k-ai">AI 단계</span><p>무엇을 판단·생성하나 — Decide, Extract, Summarize, Ask Gemini</p></div>
+    <div class="card"><span class="kind k-act">행동</span><p>어디에 남기나 — 시트에 행 추가, Drive에 저장</p></div>
+    <div class="card"><span class="kind k-note">알림</span><p>어떻게 알려 주나 — 이메일, Chat 알림</p></div>
+  </div>
+
+  <h2 id="f1"><span class="num">FLOW 1</span>아침 학습 브리핑</h2>
+  <div class="flow-meta"><span>입문</span><span>만드는 시간 약 5분</span><span>Gmail · 캘린더</span></div>
+  <p>평일 아침마다 어제 온 메일과 오늘 일정을 묶어 "오늘 챙길 것"과 인출 질문 하나를 보내 주는 플로우. 판단 없이 시간에 따라 움직이는 가장 단순한 형태.</p>
+  <ol class="flow"><li class="fb s"><span class="kind">시작 조건</span><b>On a schedule</b><span class="ko">정해진 시간에</span><p>평일(월~금) 오전 8:00</p></li><li class="fb a"><span class="kind">AI 단계</span><b>Recap unread emails</b><span class="ko">읽지 않은 메일 요약</span><p>기간: Yesterday(어제)</p></li><li class="fb a"><span class="kind">AI 단계</span><b>Ask Gemini</b><span class="ko">Gemini에게 묻기</span><p>아래 프롬프트 + 앞 단계 요약 변수</p></li><li class="fb n"><span class="kind">알림</span><b>Notify me by email</b><span class="ko">나에게 이메일 알림</span><p>제목 "오늘의 학습 브리핑", 본문에 Ask Gemini 결과 변수</p></li></ol>
+  <div class="prompt">
+    <div class="bar"><span class="label">Ask Gemini 프롬프트 — FLOW 1</span><button class="btn copy" type="button">복사</button></div>
+<pre>아래 [어제 메일 요약]과 내 Google 캘린더의 오늘 일정을 바탕으로 오늘의 학습 브리핑을 만들어 줘.
+
+[어제 메일 요약]
+(여기에 Recap unread emails 단계의 결과 변수를 넣기)
+
+[형식]
+1. 오늘 수업·일정: 시간순, 한 줄씩
+2. 오늘 챙길 일: 메일에서 나온 과제·제출·회신, 마감이 빠른 순서
+3. 오늘의 인출 질문 1개: 오늘 있는 수업 중 하나에 대해, 지난 시간 내용을 떠올려 보게 하는 질문 (정답은 쓰지 않음)
+전체 12줄 이내. 메일이나 캘린더에 없는 내용은 지어내지 않는다.</pre>
+  </div>
+  <p class="note">테스트: <b>Test run</b> → 바로 메일이 오는지 확인 → <b>Turn on</b>. 메일함을 정리하는 습관이 없으면 "읽지 않은 메일"이 너무 많을 수 있음 — 그럴 땐 Recap 단계를 빼고 캘린더만으로 브리핑.</p>
+
+  <h2 id="f2"><span class="num">FLOW 2</span>수업 공지 비서</h2>
+  <div class="flow-meta"><span>핵심 실습</span><span>만드는 시간 약 15분</span><span>Gmail · Sheets</span></div>
+  <p>메일이 오면 Gemini가 수업 공지인지 <b>판단</b>하고, 맞으면 할 일과 마감일을 뽑아 <b>시트에 기록</b>한 뒤, 관련 개념 질문과 함께 <b>알려 주는</b> 에이전트. 공지가 아니면 아무것도 하지 않음.</p>
+  <div class="card prep"><b>준비 2분</b>
+    <ol class="tight">
+      <li>새 Google 시트 「학습 일정표」 만들기 → 1행에 <code>과목 | 할 일 | 마감 | 개념 질문 | 받은 날</code></li>
+      <li>테스트용 메일 2통을 나에게 보내기 (아래 문구 복사)</li>
+    </ol>
+  </div>
+  <div class="prompt">
+    <div class="bar"><span class="label">테스트 메일 ① 수업 공지 (제목 / 본문)</span><button class="btn ghost copy" type="button">복사</button></div>
+<pre>제목: [인지심리학] 6주차 과제 안내
+본문: 6주차 과제는 작업기억 모델(Baddeley)과 다중저장 모델(Atkinson-Shiffrin)을 비교하는 A4 2쪽 보고서입니다. 11월 25일(화) 23:59까지 LMS에 제출하세요.</pre>
+  </div>
+  <div class="prompt">
+    <div class="bar"><span class="label">테스트 메일 ② 수업과 무관한 메일 (제목 / 본문)</span><button class="btn ghost copy" type="button">복사</button></div>
+<pre>제목: 이번 주 학생식당 메뉴 안내
+본문: 학생식당 이번 주 특식은 수요일 돈가스입니다. 많은 이용 바랍니다.</pre>
+  </div>
+  <ol class="flow"><li class="fb s"><span class="kind">시작 조건</span><b>When I get an email</b><span class="ko">메일을 받으면</span><p>조건은 비워 둠 (나중에 보낸 사람·제목 조건으로 좁히기)</p></li><li class="fb a"><span class="kind">AI 단계</span><b>Decide</b><span class="ko">판단하기</span><p>수업 공지인가? → 결과가 두 갈래로 나뉨</p></li><li class="fb-branch"><div class="br yes"><div class="bl">If true · 맞으면</div><ol class="flow sub"><li class="fb a"><span class="kind">AI 단계</span><b>Extract</b><span class="ko">정보 뽑기</span><p>과목명 · 할 일 · 마감 일시</p></li><li class="fb a"><span class="kind">AI 단계</span><b>Ask Gemini</b><span class="ko">Gemini에게 묻기</span><p>개념 질문 2개 생성 (정답 없이)</p></li><li class="fb t"><span class="kind">행동</span><b>Sheets · Add a row</b><span class="ko">시트에 행 추가</span><p>「학습 일정표」의 각 열에 변수 연결</p></li><li class="fb n"><span class="kind">알림</span><b>Notify me by email</b><span class="ko">나에게 이메일 알림</span><p>제목 "새 과제: (과목명)" · 할 일 · 마감 · 개념 질문</p></li></ol></div><div class="br no"><div class="bl">If false · 아니면</div><ol class="flow sub"><li class="fb empty"><span class="ko">아무것도 하지 않음 — 판단해서 무시하는 것도 에이전트의 일</span></li></ol></div></li></ol>
+  <div class="prompt">
+    <div class="bar"><span class="label">Decide 프롬프트 — FLOW 2</span><button class="btn copy" type="button">복사</button></div>
+<pre>이 메일이 대학 수업과 직접 관련된 공지인지 판단해 줘.
+true: 과제, 시험·퀴즈, 휴강·보강, 수업 자료 업로드, 제출 일정 변경 안내
+false: 광고, 학생식당·행사·동아리 안내, 뉴스레터, 개인 대화
+
+[메일]
+(제목·본문 변수 넣기)</pre>
+  </div>
+  <div class="prompt">
+    <div class="bar"><span class="label">Extract에서 뽑을 항목 — FLOW 2</span><button class="btn copy" type="button">복사</button></div>
+<pre>과목명, 해야 할 일(한 줄), 마감 일시(YYYY-MM-DD HH:MM, 없으면 &quot;없음&quot;)</pre>
+  </div>
+  <div class="prompt">
+    <div class="bar"><span class="label">Ask Gemini 프롬프트 — FLOW 2</span><button class="btn copy" type="button">복사</button></div>
+<pre>너는 [과목명] 학습 조교다. 아래 공지 내용과 관련해, 과제를 시작하기 전에
+스스로 떠올려 봐야 할 핵심 개념 질문 2개를 만들어라.
+- 정답은 쓰지 않는다.
+- &quot;~의 차이를 설명해 보라&quot;, &quot;~의 예를 들어 보라&quot;처럼 직접 설명하게 하는 질문으로 쓴다.
+
+[공지에서 추출한 내용]
+(Extract 단계의 과목명·할 일 변수 넣기)</pre>
+  </div>
+  <h3>테스트하고 검증하기</h3>
+  <ul class="checks" data-checks="pnu-flow2">
+    <li><label><input type="checkbox"><span><b>Test run</b>에서 메일 ①을 골랐을 때 시트에 행이 생기고 알림 메일이 왔는가?</span></label></li>
+    <li><label><input type="checkbox"><span>메일 ②로 테스트했을 때 Decide가 false로 판단하고 멈췄는가? (<b>Activity</b> 탭에서 확인)</span></label></li>
+    <li><label><input type="checkbox"><span>애매한 메일("다음 주 수요일 휴강합니다")을 보내 보았는가? 판단이 기대와 같았는가?</span></label></li>
+    <li><label><input type="checkbox"><span>Ask Gemini 결과에 정답이 섞여 있지 않은가?</span></label></li>
+    <li><label><input type="checkbox"><span>결과가 괜찮으면 <b>Turn on</b>으로 켰는가?</span></label></li>
+  </ul>
+  <p class="progress-line" data-checks-out="pnu-flow2"></p>
+  <p class="note">테스트 실행도 실제로 메일을 보내고 시트에 씀. 이벤트 시작 조건은 켠 뒤 실제 실행까지 몇 분 걸릴 수 있음.</p>
+
+  <h2 id="f3"><span class="num">FLOW 3</span>강의자료 자동 보관</h2>
+  <div class="flow-meta"><span>중급</span><span>만드는 시간 약 10분</span><span>Gmail · Drive</span></div>
+  <p>첨부파일이 있는 메일이 오면 수업 자료인지 판단해서, 맞으면 Drive 「강의자료」 폴더에 저장하고 한 줄 요약을 보내 주는 플로우.</p>
+  <ol class="flow"><li class="fb s"><span class="kind">시작 조건</span><b>When I get an email</b><span class="ko">메일을 받으면</span><p>조건: 첨부파일 있음</p></li><li class="fb a"><span class="kind">AI 단계</span><b>Decide</b><span class="ko">판단하기</span><p>수업 자료인가?</p></li><li class="fb-branch"><div class="br yes"><div class="bl">If true · 맞으면</div><ol class="flow sub"><li class="fb t"><span class="kind">행동</span><b>Add email attachments to Drive</b><span class="ko">첨부파일을 Drive에 저장</span><p>폴더: 「강의자료」 (미리 만들어 두기)</p></li><li class="fb a"><span class="kind">AI 단계</span><b>Summarize</b><span class="ko">요약하기</span><p>아래 지시 추가</p></li><li class="fb n"><span class="kind">알림</span><b>Notify me by email</b><span class="ko">나에게 이메일 알림</span><p>요약 + "강의자료 폴더에 저장됨"</p></li></ol></div><div class="br no"><div class="bl">If false · 아니면</div><ol class="flow sub"><li class="fb empty"><span class="ko">아무것도 하지 않음 — 판단해서 무시하는 것도 에이전트의 일</span></li></ol></div></li></ol>
+  <div class="prompt">
+    <div class="bar"><span class="label">Decide 프롬프트 — FLOW 3</span><button class="btn copy" type="button">복사</button></div>
+<pre>이 메일의 첨부파일이 수업 자료(강의 슬라이드, 읽기 자료, 과제 안내문, 실습 파일)인지 판단해 줘.
+영수증, 신청서, 홍보 포스터, 개인 사진이면 false.
+
+[메일]
+(제목·본문·보낸 사람 변수 넣기)</pre>
+  </div>
+  <div class="prompt">
+    <div class="bar"><span class="label">Summarize에 덧붙일 지시 — FLOW 3</span><button class="btn copy" type="button">복사</button></div>
+<pre>이 메일이 어떤 수업의 어떤 자료인지 한 줄로, 그리고 자료를 언제까지 무엇에 써야 하는지 한 줄로 요약해 줘.</pre>
+  </div>
+  <p class="note">STEP 2에서 만든 학습 조교에 이 폴더의 자료를 첨부하면, 자료가 쌓이는 곳과 조교가 공부시키는 곳이 연결됨.</p>
+
+  <h2 id="f4"><span class="num">FLOW 4</span>스터디 질문함</h2>
+  <div class="flow-meta"><span>중급 · 조장·튜터용</span><span>만드는 시간 약 15분</span><span>Forms · Sheets</span></div>
+  <p>스터디원이 Google 폼으로 질문을 내면, 개념 질문인지 판단해서 <b>맞으면 AI 힌트를 붙여 기록</b>하고, <b>아니면 "직접 답변 필요"로 기록</b>해 조장에게 알리는 플로우. 두 갈래 모두 행동이 있는 예시.</p>
+  <div class="card prep"><b>준비 3분</b> Google 폼 「스터디 질문함」: 이름(단답) · 과목(단답) · 질문(장문). 응답 기록용 시트 「질문 기록」: <code>이름 | 과목 | 질문 | 분류 | 힌트</code></div>
+  <ol class="flow"><li class="fb s"><span class="kind">시작 조건</span><b>When a form response comes in</b><span class="ko">폼 응답이 들어오면</span><p>폼: 「스터디 질문함」</p></li><li class="fb a"><span class="kind">AI 단계</span><b>Decide</b><span class="ko">판단하기</span><p>개념을 이해하려는 질문인가?</p></li><li class="fb-branch"><div class="br yes"><div class="bl">If true · 맞으면</div><ol class="flow sub"><li class="fb a"><span class="kind">AI 단계</span><b>Ask Gemini</b><span class="ko">Gemini에게 묻기</span><p>정답 대신 단계별 힌트 2개</p></li><li class="fb t"><span class="kind">행동</span><b>Sheets · Add a row</b><span class="ko">시트에 행 추가</span><p>분류 "개념 질문" + 힌트</p></li><li class="fb n"><span class="kind">알림</span><b>Notify me by email</b><span class="ko">나에게 이메일 알림</span><p>질문 + AI 힌트 — 조장이 확인 후 전달</p></li></ol></div><div class="br no"><div class="bl">If false · 아니면</div><ol class="flow sub"><li class="fb t"><span class="kind">행동</span><b>Sheets · Add a row</b><span class="ko">시트에 행 추가</span><p>분류 "직접 답변 필요"</p></li><li class="fb n"><span class="kind">알림</span><b>Notify me by email</b><span class="ko">나에게 이메일 알림</span><p>"직접 답해야 할 질문이 왔음"</p></li></ol></div></li></ol>
+  <div class="prompt">
+    <div class="bar"><span class="label">Decide 프롬프트 — FLOW 4</span><button class="btn copy" type="button">복사</button></div>
+<pre>아래 질문이 개념을 이해하려는 질문인지 판단해 줘.
+true: 개념의 뜻·차이·예시·원리를 묻는 질문
+false: 과제나 시험의 정답 자체를 요구하는 질문, 일정·행정 문의
+
+[제출된 질문]
+(폼 응답의 질문 변수 넣기)</pre>
+  </div>
+  <div class="prompt">
+    <div class="bar"><span class="label">Ask Gemini 프롬프트 — FLOW 4</span><button class="btn copy" type="button">복사</button></div>
+<pre>너는 스터디 조교다. 아래 질문에 정답을 바로 주지 말고,
+스스로 답을 찾아갈 수 있는 힌트 2개를 단계적으로 써라.
+1번 힌트는 떠올려야 할 개념, 2번 힌트는 비교하거나 적용해 볼 예시.
+각 힌트는 2줄 이내.
+
+[과목] (폼 응답의 과목 변수)
+[질문] (폼 응답의 질문 변수)</pre>
+  </div>
+  <p class="note">AI 힌트는 스터디원에게 바로 보내지 않고 조장에게 먼저 옴. 사람이 확인하고 전달하는 단계를 남겨 두는 것이 안전한 설계.</p>
+
+  <h2 id="f5"><span class="num">FLOW 5</span>주간 학습 회고</h2>
+  <div class="flow-meta"><span>응용</span><span>만드는 시간 약 5분</span><span>Sheets · Drive</span></div>
+  <p>매주 금요일 저녁, FLOW 2가 쌓은 「학습 일정표」를 읽고 다음 주 마감과 회고 질문을 보내 주는 플로우. 플로우끼리 시트로 이어지면 하나의 학습 시스템이 됨.</p>
+  <ol class="flow"><li class="fb s"><span class="kind">시작 조건</span><b>On a schedule</b><span class="ko">정해진 시간에</span><p>매주 금요일 오후 6:00</p></li><li class="fb a"><span class="kind">AI 단계</span><b>Ask Gemini</b><span class="ko">Gemini에게 묻기</span><p>「학습 일정표」 시트를 읽고 회고 작성</p></li><li class="fb n"><span class="kind">알림</span><b>Notify me by email</b><span class="ko">나에게 이메일 알림</span><p>제목 "이번 주 학습 회고"</p></li></ol>
+  <div class="prompt">
+    <div class="bar"><span class="label">Ask Gemini 프롬프트 — FLOW 5</span><button class="btn copy" type="button">복사</button></div>
+<pre>내 Google Drive의 「학습 일정표」 시트를 보고 주간 학습 회고를 만들어 줘.
+
+1. 다음 주 마감: 마감일 순서로 과목 · 할 일 · 마감일
+2. 이번 주 기록 요약: 이번 주에 추가된 과제·공지를 과목별로 한 줄씩
+3. 회고 질문 3개: 이번 주 배운 내용을 떠올려 보게 하는 질문 (정답 없이)
+시트에 없는 내용은 지어내지 않는다. 전체 15줄 이내.</pre>
+  </div>
+  <div class="callout"><b>FLOW 2 + FLOW 5 = 학습 시스템.</b> 공지가 올 때마다 기록하고(FLOW 2), 주말마다 그 기록으로 복습을 설계함(FLOW 5). 사람이 하던 "정리 → 계획 → 복습" 루프를 에이전트가 나눠 맡는 구조.</div>
+
+  <h2 id="design">나만의 플로우 설계표</h2>
+  <p>PRD의 ⑧ 실행 조건을 아래 네 칸으로 나누면 그대로 Studio 블록이 됨.</p>
+  <div class="builder">
+    <div class="field"><label for="d-start">시작 조건</label><div class="q">어떤 일이 생기면 움직이나? (시간 · 메일 · 폼 응답)</div><input id="d-start" placeholder="예: 수업 공지 메일이 오면"></div>
+    <div class="field"><label for="d-decide">판단 기준</label><div class="q">AI가 무엇을 보고 판단하나? 맞을 때와 아닐 때는?</div><textarea id="d-decide" placeholder="예: 과제·시험 공지면 진행, 광고·행사 안내면 무시"></textarea></div>
+    <div class="field"><label for="d-act">행동</label><div class="q">어디에 무엇을 남기나?</div><textarea id="d-act" placeholder="예: 학습 일정표 시트에 과목·할 일·마감 기록"></textarea></div>
+    <div class="field"><label for="d-note">알림</label><div class="q">언제, 어떤 내용으로 알려 주나?</div><textarea id="d-note" placeholder="예: 새 과제 제목 + 개념 질문 2개를 메일로"></textarea></div>
+  </div>
+
+  <h2>안전하게 쓰기</h2>
+  <ul class="tight">
+    <li><b>테스트도 실제 실행</b> — 알림 받는 사람이 나 자신인지 먼저 확인.</li>
+    <li><b>밖으로 나가는 결과는 사람이 확인</b> — 다른 사람에게 보내는 메일·공유는 초안이나 나에게 먼저 오도록 설계.</li>
+    <li><b>판단은 틀릴 수 있음</b> — <b>Activity</b> 탭에서 Decide 결과를 가끔 확인하고, 틀린 사례로 판단 기준 문장을 고치기.</li>
+    <li><b>필요 없어지면 끄기</b> — 학기가 끝나면 플로우를 꺼 두기.</li>
+  </ul>
+
+  <div class="pager"><a href="auto.html">← STEP 3 자동화</a><a href="more.html">시연·정리 →</a></div>
+
+  <footer class="site">프롬프트를 넘어 에이전트로 · 윤명희(Lena) · 에세이 · 기능과 메뉴 위치는 2026년 11월 기준</footer>
+</main>
+<script src="../assets/app.js"></script>
+</body>
+</html>
