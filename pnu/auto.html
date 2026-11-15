@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>자동으로 굴러가게</title>
+<meta name="description" content="STEP 3 — Workspace Studio, 예약 작업, 캘린더로 학습 조교 자동화">
+<link rel="stylesheet" href="../assets/fonts/pretendard.css">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topnav" aria-label="실습 자료">
+  <div class="inner">
+    <a class="home" href="index.html">부산대 실습</a>
+    <a href="prd.html">1. PRD</a>
+    <a href="skill.html">2. 스킬</a>
+    <a href="auto.html" aria-current="page">3. 자동화</a>
+    <a href="more.html">시연·정리</a>
+  </div>
+</nav>
+<main class="wrap">
+  <div class="eyebrow">STEP 3 · 20분</div>
+  <h1>자동으로 굴러가게</h1>
+  <p class="lead">PRD의 ⑧ 실행 조건을 실제 일정으로 바꿈. 계정마다 열려 있는 기능이 다를 수 있어 세 가지 방법을 준비함. <b>A가 안 되면 B, B도 안 되면 C</b>로 진행.</p>
+
+  <div class="tabs" role="tablist" aria-label="자동화 방법 선택">
+    <button role="tab" id="t-studio" aria-controls="studio" type="button">A. Workspace Studio</button>
+    <button role="tab" id="t-sched" aria-controls="sched" type="button">B. 예약 작업</button>
+    <button role="tab" id="t-cal" aria-controls="cal" type="button">C. 캘린더 + 스킬</button>
+  </div>
+
+  <section class="panel" id="studio" role="tabpanel" aria-labelledby="t-studio">
+    <dl class="info">
+      <dt>주소</dt><dd><a href="https://studio.workspace.google.com" target="_blank" rel="noopener">studio.workspace.google.com</a> (컴퓨터 브라우저)</dd>
+      <dt>장점</dt><dd>언제 → 무엇을 → 어디로가 블록으로 보임. 에이전트의 구조를 눈으로 확인 가능</dd>
+      <dt>조건</dt><dd>학교 관리자가 Studio를 켜 둔 계정만 사용 가능 · AI 단계는 만 18세 이상</dd>
+    </dl>
+    <div class="step" style="grid-template-columns:1fr">
+      <div><div class="tag">흐름(플로우) 만들기</div><h3>매주 월요일 8시 복습 브리핑</h3>
+        <ol>
+          <li><b>새 플로우</b> 만들기</li>
+          <li>시작 조건: <b>일정</b> → 매주 월요일 오전 8:00</li>
+          <li>단계 추가: <b>Gemini에게 물어보기</b> → 아래 프롬프트 붙여 넣기</li>
+          <li>단계 추가: <b>이메일로 알림 받기</b>(또는 <b>Chat에서 알림 받기</b>) → 앞 단계의 Gemini 응답을 본문에 연결</li>
+          <li><b>테스트 실행</b> → <b>시작</b>, 활동 탭에서 결과 확인</li>
+          <li>결과가 괜찮으면 <b>사용 설정</b></li>
+        </ol></div>
+    </div>
+  <div class="prompt">
+    <div class="bar"><span class="label">Gemini에게 물어보기 단계에 넣을 프롬프트</span><button class="btn copy" type="button">복사</button></div>
+<pre>너는 [과목명] 복습을 돕는 학습 조교다.
+아래 핵심 개념 목록에서 이번 주 복습할 개념 3개를 골라,
+각각 &quot;두 개념의 차이를 설명해 보라&quot;는 질문으로 만들어라.
+
+[형식]
+- 맨 위: 이번 주 복습 질문 3개 (정답 없이 질문만)
+- 맨 아래 &quot;확인용 핵심 포인트&quot;: 질문별 핵심 요소 2~3개를 짧게
+- 전체 10줄 이내
+
+[핵심 개념 목록]
+(예: 감각기억/단기기억, 단기기억/장기기억, 부호화/인출, 유지 시연/정교화 시연, 순행간섭/역행간섭)</pre>
+  </div>
+    <p class="note">테스트 실행도 실제로 메일을 보냄. 받는 사람이 나 자신인지 먼저 확인.</p>
+  </section>
+
+  <section class="panel" id="sched" role="tabpanel" aria-labelledby="t-sched" hidden>
+    <dl class="info">
+      <dt>위치</dt><dd>Gemini 채팅창에 "매주 ~에 ~해 줘"라고 입력하면 예약 작업이 만들어짐</dd>
+      <dt>관리</dt><dd>설정의 <b>예약된 작업</b>에서 확인 · 수정 · 일시중지 · 삭제</dd>
+      <dt>조건</dt><dd>계정에 따라 아직 사용할 수 없을 수 있음 · 활동 기록 보관 사용 · 활성 예약은 최대 10개</dd>
+    </dl>
+  <div class="prompt">
+    <div class="bar"><span class="label">채팅창에 넣을 예약 프롬프트</span><button class="btn copy" type="button">복사</button></div>
+<pre>매주 월요일 오전 8시에 아래 내용을 실행해 줘.
+
+[과목명] 이번 주 복습 브리핑을 만들어 줘.
+1. 아래 핵심 개념 목록에서 3개를 골라, 두 개념의 차이를 설명해 보라는 질문으로 만든다. 정답은 쓰지 않는다.
+2. 맨 아래에 질문별 확인용 핵심 포인트를 2~3개씩 짧게 적는다.
+3. 내 캘린더에서 이번 주 과제·시험 일정을 찾아 마감이 빠른 순서로 정리한다.
+
+[핵심 개념 목록]
+(여기에 붙여 넣기)</pre>
+  </div>
+    <ul class="tight">
+      <li>캘린더 일정을 읽으려면 Google 캘린더 연결 앱 사용 권한이 필요함. 처음 실행 때 권한을 묻으면 허용.</li>
+      <li>만들어진 예약 작업은 바로 한 번 실행해 결과를 확인한 뒤 그대로 둠.</li>
+    </ul>
+  </section>
+
+  <section class="panel" id="cal" role="tabpanel" aria-labelledby="t-cal" hidden>
+    <dl class="info">
+      <dt>언제 쓰나</dt><dd>Studio와 예약 작업이 둘 다 막혀 있을 때</dd>
+      <dt>방식</dt><dd>자동 실행은 아니지만 "언제 실행할지"를 설계하는 반자동 방식</dd>
+    </dl>
+    <div class="step" style="grid-template-columns:1fr">
+      <div><div class="tag">Google 캘린더</div><h3>반복 일정 + 스킬 호출</h3>
+        <ol>
+          <li>Google 캘린더에서 매주 월요일 오전 8:00 반복 일정 만들기</li>
+          <li>제목: <b>[과목명] 복습 — Gemini에서 /스킬이름</b></li>
+          <li>설명란에 gemini.google.com 링크와 "이번 주 복습 질문 3개 내 줘" 문장 적기</li>
+          <li>알림: 10분 전 → 알림이 오면 링크를 열고 스킬 실행</li>
+        </ol></div>
+    </div>
+  </section>
+
+  <h2 id="check">자동화 점검</h2>
+  <ul class="checks" data-checks="pnu-auto">
+    <li><label><input type="checkbox"><span>테스트로 한 번 실행해 결과를 직접 받아 봤는가?</span></label></li>
+    <li><label><input type="checkbox"><span>결과에 정답이 먼저 나오지 않고 질문이 먼저 나오는가?</span></label></li>
+    <li><label><input type="checkbox"><span>결과를 받는 곳(메일·Chat·알림)이 나 자신인가?</span></label></li>
+    <li><label><input type="checkbox"><span>언제 멈출지(시험 끝난 뒤 일시중지)를 정해 두었는가?</span></label></li>
+  </ul>
+  <p class="progress-line" data-checks-out="pnu-auto"></p>
+
+  <div class="pager"><a href="skill.html">← STEP 2 스킬</a><a href="more.html">시연·정리 →</a></div>
+
+  <footer class="site">프롬프트를 넘어 에이전트로 · 윤명희(Lena) · 에세이 · 기능과 메뉴 위치는 2026년 11월 기준</footer>
+</main>
+<script src="../assets/app.js"></script>
+</body>
+</html>

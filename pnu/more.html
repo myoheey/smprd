@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>같은 설계, 다른 실행 환경</title>
+<meta name="description" content="시연과 정리 — Gemini 작업·예약됨, 검증 루틴과 한계">
+<link rel="stylesheet" href="../assets/fonts/pretendard.css">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topnav" aria-label="실습 자료">
+  <div class="inner">
+    <a class="home" href="index.html">부산대 실습</a>
+    <a href="prd.html">1. PRD</a>
+    <a href="skill.html">2. 스킬</a>
+    <a href="auto.html">3. 자동화</a>
+    <a href="more.html" aria-current="page">시연·정리</a>
+  </div>
+</nav>
+<main class="wrap">
+  <div class="eyebrow">시연 · 정리</div>
+  <h1>같은 설계, 다른 실행 환경</h1>
+  <p class="lead">오늘 쓴 PRD는 학내 계정의 스킬과 자동화뿐 아니라, 더 강력한 에이전트와 앱으로도 그대로 옮겨짐.</p>
+
+  <h2 id="task"><span class="num">시연</span>Gemini 작업(Task)과 예약됨(Scheduled)</h2>
+  <p>예전 이름은 Gemini Spark. 지금은 Gemini 입력창 아래 <b>채팅 / 작업(Task)</b> 전환으로 쓰고, 반복 실행은 왼쪽 사이드바의 <b>예약됨(Scheduled)</b>에서 관리함.</p>
+  <div class="grid c2">
+    <div class="card"><b>작업(Task)</b><p class="small muted" style="margin:6px 0 0">여러 단계를 스스로 계획하고, Gmail·캘린더·Drive 같은 앱과 웹을 오가며 끝까지 처리하는 에이전트. 결과는 확인 후 승인하는 방식.</p></div>
+    <div class="card"><b>예약됨(Scheduled)</b><p class="small muted" style="margin:6px 0 0">작업을 정해진 시간에 맞춰 백그라운드에서 반복 실행. 채팅의 예약 작업과는 다른 기능.</p></div>
+  </div>
+  <div class="callout" style="margin-top:14px"><b>내 계정에서 쓰려면</b> 개인 Google 계정 + Google AI Pro 또는 Ultra 구독 + 만 18세 이상 + 활동 기록 보관 사용. <b>학교 계정에서는 쓸 수 없어</b> 오늘은 강사 시연으로만 진행함.</div>
+
+  <h3>PRD가 옮겨 가는 곳</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>PRD 항목</th><th>학내 계정 (오늘 실습)</th><th>작업(Task) · 예약됨</th></tr></thead>
+    <tbody>
+      <tr><th>① ~ ⑦ 지시문</th><td>스킬의 요청 사항</td><td>작업에 지정하는 스킬</td></tr>
+      <tr><th>③ 입력 자료</th><td>스킬에 첨부한 PDF</td><td>Drive · Gmail 등 연결 앱</td></tr>
+      <tr><th>⑧ 실행 조건</th><td>Studio · 예약 작업</td><td>예약됨(Scheduled)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="verify"><span class="num">정리</span>AI가 만든 학습 자료 검증하기</h2>
+  <div class="trio">
+    <div><div class="k">1</div><div class="t">근거 확인</div><p class="d">피드백에 붙은 슬라이드 번호를 실제 자료에서 찾아보기</p></div>
+    <div><div class="k">2</div><div class="t">정답 직접 검증</div><p class="d">모범 답안과 교재 내용을 한 문제씩 대조하기</p></div>
+    <div><div class="k">3</div><div class="t">다른 사람 테스트</div><p class="d">동료가 써 보며 이상한 질문·답을 표시하기</p></div>
+  </div>
+
+  <h3>알고 쓰기</h3>
+  <ul class="tight">
+    <li><b>자료 업로드</b> — 개인정보가 담긴 파일은 올리지 않음. 강의자료 활용은 학내 규정 확인.</li>
+    <li><b>과제·시험</b> — 수업별 AI 활용 규정을 먼저 확인. 조교는 공부를 돕는 도구, 대신 하는 도구가 아님.</li>
+    <li><b>자동화의 함정</b> — 복습 질문을 AI가 대신 풀어 주면 기억은 남지 않음. 질문은 자동으로, 떠올리기는 내가.</li>
+  </ul>
+
+  <div class="callout"><b>AI가 대신 떠올려 주면, 기억은 내 것이 되지 않는다.</b> 좋은 학습 조교의 기준은 "내가 더 많이 생각하게 만드는가".</div>
+
+  <h2 id="next">다음 한 걸음</h2>
+  <ul class="tight">
+    <li>같은 PRD로 학습 앱 만들기 — Gemini 입력창의 <b>도구 → Canvas</b>에서 "이 PRD로 HTML 퀴즈 앱을 만들어 줘"</li>
+    <li>다른 과목으로 옮기기 — PRD의 ②③④만 바꿔 새 스킬 만들기</li>
+    <li>시험이 끝나면 자동화 <b>일시중지</b></li>
+  </ul>
+
+  <div class="pager"><a href="auto.html">← STEP 3 자동화</a><a href="index.html">처음으로 →</a></div>
+
+  <footer class="site">프롬프트를 넘어 에이전트로 · 윤명희(Lena) · 에세이 · 기능과 메뉴 위치는 2026년 11월 기준</footer>
+</main>
+<script src="../assets/app.js"></script>
+</body>
+</html>

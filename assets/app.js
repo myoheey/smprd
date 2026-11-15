@@ -48,7 +48,7 @@
   // PRD 작성기
   const builder = document.querySelector('[data-prd-builder]');
   if (builder) {
-    const KEY = 'prd-draft';
+    const KEY = 'prd-draft' + (builder.dataset.prdBuilder ? ':' + builder.dataset.prdBuilder : '');
     const fields = [...builder.querySelectorAll('[data-field]')];
     const saved = store.get(KEY) || {};
     fields.forEach(f => { if (saved[f.dataset.field]) f.value = saved[f.dataset.field]; });
@@ -56,7 +56,7 @@
     fields.forEach(f => f.addEventListener('input', save));
     const toText = () => fields.map(f => {
       const v = f.value.trim() || '(작성 전)';
-      return f.dataset.field === 'name' ? `# 학습도구 이름: ${v}` : `## ${f.dataset.title}\n${v}`;
+      return f.dataset.field === 'name' ? `# ${f.dataset.title || '학습도구 이름'}: ${v}` : `## ${f.dataset.title}\n${v}`;
     }).join('\n');
     const copyBtn = document.querySelector('[data-prd-copy]');
     if (copyBtn) copyBtn.addEventListener('click', async () => flash(copyBtn, await copyText(toText())));
