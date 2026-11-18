@@ -246,6 +246,6 @@ ol.flow.sub { margin: 6px 0 0; }
 .stage-t { font-size: 18px; font-weight: 800; }
 .stage-actions { display: flex; gap: 8px; }
 .stage-actions .btn { text-decoration: none; }
-.embed { position: relative; width: 100%; aspect-ratio: auto; height: calc((100cqw - 28px) * .5625 + 29px); border-radius: 12px; overflow: hidden; background: #000; }
+.embed { position: relative; width: 100%; aspect-ratio: auto; height: calc(100cqw * .5625 + 40px); border-radius: 12px; overflow: hidden; background: #000; }
 .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-@media (max-width: 640px) { .stage { padding: 10px; border-radius: 14px; } .embed { height: calc((100cqw - 20px) * .5625 + 29px); } .stage-t { font-size: 16px; } }
+@media (max-width: 640px) { .stage { padding: 10px; border-radius: 14px; } .embed { height: calc(100cqw * .5625 + 40px); } .stage-t { font-size: 16px; } }
