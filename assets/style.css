@@ -238,3 +238,7 @@ ol.flow > li + li::before { content: ""; position: absolute; left: 26px; top: -1
 .br.yes .bl { color: #2E9E6A; } .br.no .bl { color: var(--faint); }
 ol.flow.sub { margin: 6px 0 0; }
 @media (max-width: 640px) { .fb-branch { grid-template-columns: 1fr; } }
+
+/* 슬라이드 임베드 */
+.embed { position: relative; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surface); }
+.embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
