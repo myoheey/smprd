@@ -102,4 +102,12 @@
   document.querySelectorAll('figure img').forEach(img => img.addEventListener('click', () => {
     lb.querySelector('img').src = img.src; lb.querySelector('img').alt = img.alt; lb.hidden = false;
   }));
+
+  // 전체 화면 버튼
+  document.querySelectorAll('[data-fullscreen]').forEach(btn => btn.addEventListener('click', () => {
+    const el = document.getElementById(btn.dataset.fullscreen);
+    if (!el) return;
+    const req = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (req) req.call(el); else window.open(el.src, '_blank');
+  }));
 })();
