@@ -249,3 +249,4 @@ ol.flow.sub { margin: 6px 0 0; }
 .embed { position: relative; width: 100%; aspect-ratio: auto; height: calc(100cqw * .5625 + 40px); border-radius: 12px; overflow: hidden; background: #000; }
 .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 @media (max-width: 640px) { .stage { padding: 10px; border-radius: 14px; } .embed { height: calc(100cqw * .5625 + 40px); } .stage-t { font-size: 16px; } }
+.embed.canva { height: calc(100cqw * .5625); }
